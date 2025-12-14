@@ -1,0 +1,777 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@400;600&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+        <title>August</title>
+        <style>
+            body {
+            font-family: Arial, sans-serif;
+            background-color: #fff;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            z-index: 1;
+            font-family: 'Poppins', 'Nunito', 'Quicksand', 'Noto Sans SC', 'Microsoft YaHei', sans-serif;
+            }
+
+            #bg-blur, #bg-clear{
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+            }
+
+            #bg-clear{
+            display: none;
+            }
+
+            .content{
+            position: relative;
+            z-index: 1;
+            display: block;
+            transition: opacity 1.5s ease;
+            }
+
+            h1 {
+            margin: 20px 0;
+            /*color: #333;*/
+            }
+
+            .page {
+            padding: 30px;
+            }
+
+            .back-button, .show-button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            background: #ccc;
+            cursor: pointer;
+            font-size: 14px;
+            }
+
+            .back-button:active, .show-button:active{
+            transform: scale(0.95);
+            background-color: #aaa;
+            }
+
+            .floating-button{
+            position: fixed;
+            bottom: 15px;
+            right: 15px;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            border: 1px solid #333;
+            background: transparent;
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            z-index: 1000;
+            }
+
+            .floating1{
+            bottom: 15px;
+            right: 10px;
+            }
+
+            .floating2{
+            top: 25px;
+            right: 10px;
+            }
+
+            .floating-button:active{
+            transform: scale(0.95);
+            background-color: #aaa;
+            color: #fff;
+            }
+
+            .memories-title {
+            font-size: 1.5em; /* Small, like phone header */
+            color: #e60073;
+            margin: 15px 0 5px;
+            text-align: center;
+            }
+
+            .subtitle {
+            font-size: 0.8em;
+            color: #777;
+            margin-bottom: 10px;
+            text-align: center;
+            }
+
+            .date-heading {
+            font-size: 1.1em;
+            color: #333;
+            margin: 15px 0 8px 5%;
+            text-align: left;
+            padding-bottom: 5px;
+            padding-bottom: 5px;
+            }
+
+            .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); /* 3 per row like iPhone */
+            gap: 3px;
+            margin: 0 auto 20px;
+            max-width: 420px; /* like iPhone 12 Pro width */
+            }
+
+            .photo-grid img, .photo-grid video {
+            width: 100%;
+            aspect-ratio: 1 / 1; /* force square */
+            object-fit: cover;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: transform 0.2s;
+            display: block;
+            }
+
+            .photo-grid img:hover, .photo-grid video:hover {
+            transform: scale(1.03);
+            }
+
+            .photo-item{
+            position: relative;
+            }
+            .photo-number{
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            background: rgba(0,0,0,0.6);
+            color: #fff;
+            padding: 2px 6px;
+            font-size: 0.7em;
+            border-radius: 4px;
+            z-index: 10;
+            }
+
+            /* Lightbox */
+            #lightbox {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            }
+
+            #lightbox img {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 10px;
+            }
+
+            #lightbox.active {
+            display: flex;
+            }
+
+            #lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 25px;
+            font-size: 2rem;
+            font-weight: bold;
+            color: white;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+            }
+
+            #lightbox-close:hover {
+            transform: scale(1.2);
+            color: #ff4d4d;
+            }
+
+            #lightbox-prev, #lightbox-next {
+            position: absolute;
+            top: 50%;
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: white;
+            cursor: pointer;
+            user-select: none;
+            transform: translateY(-50%);
+            padding: 10px;
+            transition: color 0.2s ease;
+            }
+
+            #lightbox-prev { left: 20px; }
+            #lightbox-next { right: 20px; }
+
+            #lightbox-prev:hover, #lightbox-next:hover {
+            color: #ff4d4d;
+            }
+
+            #lightbox-drive {
+                display: none;
+                width: auto;
+                max-width: 90%;
+                height: auto;
+                max-height: 90vh;
+                border: none;
+                border-radius: 10px;
+                aspect-ratio: 16 / 9; /* default, JS will override */
+            }
+
+
+        </style>
+    </head>
+
+    <body>
+        <div class="page">
+        <button class="floating-button floating2" onclick="scrollToTop()">↑</button>
+        <button class="floating-button floating1" onclick="scrollToBottom()">↓</button>
+        <h1 class="memories-title">August ~ ✿♥‿♥</h1>
+        <p class="subtitle">Little pieces of our story 💕📸✨</p>
+
+        <!-- Updated HTML with numbering on each photo per day. Only the modified Sections 1 & 2 are shown here for clarity. You can merge these back into your full file. -->
+        <h2 class="date-heading">2/8/2025</h2>
+        <div class="photo-grid" id="day13-grid"></div>
+        
+        <h2 class="date-heading">3/8/2025</h2>
+        <div class="photo-grid" id="day14-grid"></div>
+        
+        <h2 class="date-heading">4/8/2025</h2>
+        <div class="photo-grid" id="day15-grid"></div>
+
+        <h2 class="date-heading">5/8/2025</h2>
+        <div class="photo-grid" id="day16-grid"></div>
+        
+        <h2 class="date-heading">6/8/2025</h2>
+        <div class="photo-grid" id="day17-grid"></div>
+        
+        <h2 class="date-heading">7/8/2025</h2>
+        <div class="photo-grid" id="day18-grid"></div>
+        
+        <h2 class="date-heading">8/8/2025</h2>
+        <div class="photo-grid" id="day19-grid"></div>
+        
+        <h2 class="date-heading">9/8/2025</h2>
+        <div class="photo-grid" id="day20-grid"></div>
+        
+        <h2 class="date-heading">10/8/2025</h2>
+        <div class="photo-grid" id="day21-grid"></div>
+        
+        <h2 class="date-heading">11/8/2025</h2>
+        <div class="photo-grid" id="day22-grid"></div>
+
+        <h2 class="date-heading">12/8/2025</h2>
+        <div class="photo-grid" id="day23-grid"></div>
+
+        <h2 class="date-heading">13/8/2025</h2>
+        <div class="photo-grid" id="day24-grid"></div>
+
+        <h2 class="date-heading">14/8/2025</h2>
+        <div class="photo-grid" id="day25-grid"></div>
+
+        <h2 class="date-heading">15/8/2025</h2>
+        <div class="photo-grid" id="day26-grid"></div>
+
+        <h2 class="date-heading">17/8/2025</h2>
+        <div class="photo-grid" id="day27-grid"></div>
+
+        <h2 class="date-heading">20/8/2025</h2>
+        <div class="photo-grid" id="day28-grid"></div>
+
+        <h2 class="date-heading">23/8/2025</h2>
+        <div class="photo-grid" id="day29-grid"></div>
+
+        <h2 class="date-heading">25/8/2025</h2>
+        <div class="photo-grid" id="day30-grid"></div>
+
+        <h2 class="date-heading">26/8/2025</h2>
+        <div class="photo-grid" id="day31-grid"></div>
+
+        <h2 class="date-heading">29/8/2025</h2>
+        <div class="photo-grid" id="day32-grid"></div>
+
+        <h2 class="date-heading">30/8/2025</h2>
+        <div class="photo-grid" id="day33-grid"></div>
+
+        <h2 class="date-heading">31/8/2025</h2>
+        <div class="photo-grid" id="day34-grid"></div>
+
+        <!-- Lightbox Number Display -->
+        <span id="lightbox-index" style="position:fixed; top:10px; left:10px; color:white; background:rgba(0,0,0,0.6); padding:6px 10px; border-radius:6px; font-size:1rem; z-index:2000; display:none;">1</span>
+
+        <div id="lightbox">
+          <span id="lightbox-close">&times;</span>
+          <span id="lightbox-prev">&#10094;</span>
+          <img id="lightbox-img" src="" alt="enlarged photo">
+          <video id="lightbox-video" controls loop style="display:none; max-width:90%; max-height:90%;">
+            <source src="" type="video/mp4">
+          </video>
+          <iframe id="lightbox-drive" style="display: none; width: 90%; border: none; border-radius: 10px;" allow="autoplay" allowfullscreen></iframe>
+          <span id="lightbox-next">&#10095;</span>
+        </div>
+
+        <button class="back-button" onclick="location.href='index.html'">Back</button>
+
+        <script>
+            // Arrays with media info for each day///////////
+            const day8_2 = [
+            {type: 'image', src: 'image/8.2/1.PNG'},
+            {type: 'image', src: 'image/8.2/2.PNG'},
+            {type: 'image', src: 'image/8.2/3.PNG'},
+            {type: 'image', src: 'image/8.2/4.PNG'},
+            {type: 'image', src: 'image/8.2/5.PNG'},
+            {type: 'image', src: 'image/8.2/6.PNG'},
+            {type: 'video', src: 'image/8.2/7.mov', poster: 'image/8.2/7.jpg'},
+            {type: 'image', src: 'image/8.2/8.jpg'},
+            {type: 'image', src: 'image/8.2/9.jpg'}
+            ]
+
+            const day8_3 = [
+            {type: 'image', src: 'image/8.3/1.png'},
+            {type: 'image', src: 'image/8.3/2.JPEG'},
+            {type: 'image', src: 'image/8.3/3.JPEG'},
+            {type: 'image', src: 'image/8.3/4.PNG'}
+            ]
+
+            const day8_4 = [
+            {type: 'image', src: 'image/8.4/1.PNG'},
+            {type: 'image', src: 'image/8.4/2.PNG'},
+            {type: 'image', src: 'image/8.4/3.PNG'},
+            {type: 'image', src: 'image/8.4/4.PNG'},
+            {type: 'image', src: 'image/8.4/5.PNG'},
+            {type: 'image', src: 'image/8.4/6.PNG'},
+            {type: 'image', src: 'image/8.4/7.PNG'},
+            {type: 'video', src: 'image/8.4/8.mov', poster: 'image/8.4/8.jpg'},
+            {type: 'video', src: 'image/8.4/9.mov', poster: 'image/8.4/9.jpg'},
+            {type: 'video', src: 'image/8.4/10.mov', poster: 'image/8.4/10.jpg'},
+            {type: 'image', src: 'image/8.4/11.jpg'},
+            {type: 'video', src: 'image/8.4/12.mov', poster: 'image/8.4/12.jpg'}
+            ]
+
+            const day8_5 = [
+            {type: 'video', src: 'image/8.5/1.mov', poster: 'image/8.5/1.jpg'},
+            {type: 'image', src: 'image/8.5/2.jpg'},
+            {type: 'video', src: 'image/8.5/3.mov', poster: 'image/8.5/3.jpg'}
+            ]
+
+            const day8_6 = [
+            {type: 'image', src: 'image/8.6/1.PNG'},
+            {type: 'image', src: 'image/8.6/2.PNG'},
+            {type: 'image', src: 'image/8.6/3.PNG'},
+            {type: 'image', src: 'image/8.6/4.PNG'},
+            {type: 'image', src: 'image/8.6/5.PNG'},
+            {type: 'image', src: 'image/8.6/6.PNG'},
+            {type: 'image', src: 'image/8.6/7.PNG'}
+            ]
+            
+            const day8_7 = [
+            {
+                type: 'drive',
+                id: '1ZeEEMJR3T1aPQDcU6RcdoyUaNJW7mRWQ',
+                poster: 'image/8.7/1.jpg',
+                orientation: 'potrait'
+            }
+            ]
+
+            const day8_8 = [
+            {type: 'image', src: 'image/8.8/1.jpg'},
+            {type: 'image', src: 'image/8.8/2.jpg'},
+            {type: 'video', src: 'image/8.8/3.mov', poster: 'image/8.8/3.jpg'},
+            {type: 'video', src: 'image/8.8/4.mov', poster: 'image/8.8/4.jpg'},
+            {type: 'image', src: 'image/8.8/5.jpg'},
+            {type: 'image', src: 'image/8.8/6.PNG'}
+            ]
+
+            const day8_9 = [
+            {type: 'image', src: 'image/8.9/1.PNG'},
+            {type: 'image', src: 'image/8.9/2.PNG'},
+            {type: 'image', src: 'image/8.9/3.PNG'},
+            {type: 'image', src: 'image/8.9/4.PNG'},
+            {type: 'image', src: 'image/8.9/5.jpg'},
+            {type: 'image', src: 'image/8.9/6.PNG'},
+            {type: 'image', src: 'image/8.9/7.PNG'},
+            {type: 'image', src: 'image/8.9/8.PNG'},
+            {type: 'image', src: 'image/8.9/9.PNG'},
+            {type: 'image', src: 'image/8.9/10.PNG'},
+            {type: 'image', src: 'image/8.9/11.PNG'}
+            ]
+
+            const day8_10 = [ 
+            {type: 'image', src: 'image/8.10/1.JPEG'},
+            {type: 'video', src: 'image/8.10/2.mov', poster: 'image/8.10/2.jpg'},
+            {type: 'image', src: 'image/8.10/3.jpg'},
+            {type: 'video', src: 'image/8.10/4.mov', poster: 'image/8.10/4.jpg'},
+            {type: 'video', src: 'image/8.10/5.mov', poster: 'image/8.10/5.jpg'},
+            {type: 'image', src: 'image/8.10/6.JPEG'},
+            {type: 'video', src: 'image/8.10/7.mov', poster: 'image/8.10/7.jpg'}
+            ]
+
+            const day8_11 = [
+            {type: 'image', src: 'image/8.11/1.PNG'},
+            {type: 'image', src: 'image/8.11/2.PNG'},
+            {type: 'image', src: 'image/8.11/3.PNG'},
+            {type: 'image', src: 'image/8.11/4.jpg'},
+            {type: 'image', src: 'image/8.11/5.jpg'},
+            {type: 'video', src: 'image/8.11/6.mov', poster: 'image/8.11/6.jpg'},
+            {type: 'image', src: 'image/8.11/7.jpg'}
+            ]
+
+            const day8_12 = [
+            {type: 'video', src: 'image/8.12/1.MP4', poster: 'image/8.12/1.jpg'},
+            {type: 'image', src: 'image/8.12/2.JPEG'},
+            {type: 'image', src: 'image/8.12/3.jpg'}
+            ]
+
+            const day8_13 = [
+            {type: 'image', src: 'image/8.13/1.jpeg'},
+            {type: 'video', src: 'image/8.13/2.mov', poster: 'image/8.13/2.jpg'},
+            {type: 'video', src: 'image/8.13/3.MP4', poster: 'image/8.13/3.jpg'},
+            {type: 'video', src: 'image/8.13/4.MP4', poster: 'image/8.13/4.jpg'}
+            ]
+
+            const day8_14 = [
+            {type: 'image', src: 'image/8.14/1.PNG'},
+            {type: 'image', src: 'image/8.14/2.jpg'},
+            {type: 'image', src: 'image/8.14/3.jpg'},
+            {type: 'image', src: 'image/8.14/4.PNG'}
+            ]
+
+            const day8_15 = [
+            {type: 'video', src: 'image/8.15/1.mov', poster: 'image/8.15/1.jpg'},
+            {type: 'image', src: 'image/8.15/2.jpg'},
+            {type: 'image', src: 'image/8.15/3.jpg'}
+            ]
+
+            const day8_17 = [
+            {type: 'image', src: 'image/8.17/1.JPEG'},
+            {type: 'image', src: 'image/8.17/2.jpg'},
+            {type: 'image', src: 'image/8.17/3.jpg'},
+            {type: 'image', src: 'image/8.17/4.JPG'},
+            {type: 'image', src: 'image/8.17/5.JPG'},
+            ]
+
+            const day8_20 = [
+            {type: 'image', src: 'image/8.20/1.JPEG'},
+            {type: 'video', src: 'image/8.20/2.MP4', poster: 'image/8.20/2.jpg'},
+            {type: 'image', src: 'image/8.20/3.JPEG'},
+            {
+                type: 'drive',
+                id: '1ZqqQk57Wx4Hnm80R15evzcdpKji0GEwK',                
+                poster: 'image/8.20/4.jpg',
+                orientation: 'landscape'
+            },
+            {type: 'image', src: 'image/8.20/5.JPEG'},
+            {type: 'video', src: 'image/8.20/6.mov', poster: 'image/8.20/6.jpg'}
+            ]
+
+            const day8_23 = [
+            {type: 'image', src: 'image/8.23/1.PNG'},
+            {type: 'image', src: 'image/8.23/2.PNG'},
+            {type: 'image', src: 'image/8.23/3.PNG'},
+            {type: 'image', src: 'image/8.23/4.PNG'},
+            {type: 'image', src: 'image/8.23/5.PNG'},
+            {type: 'image', src: 'image/8.23/6.PNG'},
+            {type: 'image', src: 'image/8.23/7.jpg'},
+            {type: 'image', src: 'image/8.23/8.jpg'},
+            {type: 'image', src: 'image/8.23/9.jpg'},
+            {type: 'image', src: 'image/8.23/10.jpg'}
+            ]
+
+            const day8_25 = [
+            {type: 'image', src: 'image/8.25/1.PNG'},
+            ]
+
+            const day8_26 = [
+            {type: 'image', src: 'image/8.26/1.jpg'},
+            {type: 'image', src: 'image/8.26/2.jpg'},
+            {type: 'video', src: 'image/8.26/3.mov', poster: 'image/8.26/3.jpg'},
+            {type: 'video', src: 'image/8.26/4.mov', poster: 'image/8.26/4.jpg'},
+            {type: 'image', src: 'image/8.26/5.jpg'},
+            {type: 'image', src: 'image/8.26/6.PNG'},
+            {type: 'video', src: 'image/8.26/7.mov', poster: 'image/8.26/7.jpg'},
+            {type: 'image', src: 'image/8.26/8.JPEG'}
+            ]
+
+            const day8_29 = [
+            {type: 'image', src: 'image/8.29/1.PNG'},
+            {type: 'image', src: 'image/8.29/2.PNG'},
+            {type: 'image', src: 'image/8.29/3.PNG'},
+            {type: 'image', src: 'image/8.29/4.PNG'},
+            {type: 'image', src: 'image/8.29/5.PNG'},
+            {type: 'image', src: 'image/8.29/6.PNG'},
+            {type: 'image', src: 'image/8.29/7.PNG'},
+            {type: 'image', src: 'image/8.29/8.PNG'},
+            {type: 'image', src: 'image/8.29/9.PNG'},
+            {type: 'image', src: 'image/8.29/10.PNG'},
+            {type: 'image', src: 'image/8.29/11.PNG'}
+            ]
+
+            const day8_30 = [
+            {type: 'video', src: 'image/8.30/1.mov', poster: 'image/8.30/1.jpg'},
+            {type: 'video', src: 'image/8.30/2.mov', poster: 'image/8.30/2.jpg'},
+            {type: 'video', src: 'image/8.30/3.mov', poster: 'image/8.30/3.jpg'},
+            {type: 'image', src: 'image/8.30/4.jpg'},
+            {type: 'image', src: 'image/8.30/5.jpg'},
+            {type: 'video', src: 'image/8.30/6.mov', poster: 'image/8.30/6.jpg'},
+            {type: 'video', src: 'image/8.30/7.mov', poster: 'image/8.30/7.jpg'},
+            {type: 'image', src: 'image/8.30/8.PNG'},
+            {type: 'image', src: 'image/8.30/9.PNG'},
+            {type: 'image', src: 'image/8.30/10.PNG'},
+            {type: 'image', src: 'image/8.30/11.PNG'},
+            {type: 'image', src: 'image/8.30/12.PNG'},
+            {type: 'image', src: 'image/8.30/13.PNG'},
+            ]
+
+            const day8_31 = [
+            {type: 'image', src: 'image/8.31/1.jpg'},
+            {type: 'image', src: 'image/8.31/2.jpg'},
+            {type: 'image', src: 'image/8.31/3.jpg'},
+            {type: 'image', src: 'image/8.31/4.PNG'},
+            {type: 'image', src: 'image/8.31/5.PNG'},
+            {type: 'image', src: 'image/8.31/6.jpg'},
+            {type: 'image', src: 'image/8.31/7.PNG'},
+            {type: 'image', src: 'image/8.31/8.PNG'},
+            {type: 'image', src: 'image/8.31/9.PNG'},
+            {type: 'image', src: 'image/8.31/10.PNG'},
+            {type: 'image', src: 'image/8.31/11.PNG'},
+            {type: 'image', src: 'image/8.31/12.PNG'},
+            {type: 'image', src: 'image/8.31/13.PNG'},
+            {type: 'image', src: 'image/8.31/14.PNG'},
+            {type: 'image', src: 'image/8.31/15.PNG'},
+            {type: 'image', src: 'image/8.31/16.PNG'},
+            {type: 'video', src: 'image/8.31/17.mov', poster: 'image/8.31/17.jpg'},
+            {type: 'image', src: 'image/8.31/18.PNG'},
+            {type: 'image', src: 'image/8.31/19.PNG'},
+            {type: 'image', src: 'image/8.31/20.jpg'},
+            {type: 'image', src: 'image/8.31/21.JPEG'},
+            {type: 'image', src: 'image/8.31/22.PNG'}
+            ]
+
+            // Populate all new days////////////////
+            populateGrid('day13-grid', day8_2);
+            populateGrid('day14-grid', day8_3);
+            populateGrid('day15-grid', day8_4);
+            populateGrid('day16-grid', day8_5);
+            populateGrid('day17-grid', day8_6);
+            populateGrid('day18-grid', day8_7);
+            populateGrid('day19-grid', day8_8);
+            populateGrid('day20-grid', day8_9);
+            populateGrid('day21-grid', day8_10);
+            populateGrid('day22-grid', day8_11);
+            populateGrid('day23-grid', day8_12);
+            populateGrid('day24-grid', day8_13);
+            populateGrid('day25-grid', day8_14);
+            populateGrid('day26-grid', day8_15);
+            populateGrid('day27-grid', day8_17);
+            populateGrid('day28-grid', day8_20);
+            populateGrid('day29-grid', day8_23);
+            populateGrid('day30-grid', day8_25);
+            populateGrid('day31-grid', day8_26);
+            populateGrid('day32-grid', day8_29);
+            populateGrid('day33-grid', day8_30);
+            populateGrid('day34-grid', day8_31);            
+
+
+            // Function to populate grid dynamically
+            function populateGrid(containerId, mediaArray) {
+                const container = document.getElementById(containerId);
+
+                mediaArray.forEach((item, idx) => {
+                    const div = document.createElement('div');
+                    div.className = 'photo-item';
+
+                    const numberSpan = document.createElement('span');
+                    numberSpan.className = 'photo-number';
+                    numberSpan.textContent = idx + 1;
+
+                    div.appendChild(numberSpan);
+
+                    if (item.type === 'image') {
+                    const img = document.createElement('img');
+                    img.src = item.src;
+                    img.loading = 'lazy';
+                    div.appendChild(img);
+                    } 
+                    
+                    else if (item.type === 'video') {
+                    const video = document.createElement('video');
+                    video.muted = true;
+                    video.playsInline = true;
+                    video.preload = 'metadata';
+                    if (item.poster) video.poster = item.poster;
+                    const source = document.createElement('source');
+                    source.src = item.src;
+                    source.type = 'video/mp4';
+                    video.appendChild(source);
+                    div.appendChild(video);
+                    }
+
+                    else if (item.type === 'drive') {
+                        const img = document.createElement('img');
+                        img.src = item.poster;
+                        img.dataset.type = 'drive';
+                        img.dataset.id = item.id;
+                        div.appendChild(img);
+                    }
+
+                    container.appendChild(div);
+                });
+            }
+
+            const items = document.querySelectorAll(".photo-grid img, .photo-grid video, .photo-grid img[data-type='drive']");
+            const lightbox = document.getElementById("lightbox");
+            const lightboxImg = document.getElementById("lightbox-img");
+            const lightboxVideo = document.getElementById("lightbox-video");
+            const lightboxClose = document.getElementById("lightbox-close");
+            const lightboxPrev = document.getElementById("lightbox-prev");
+            const lightboxNext = document.getElementById("lightbox-next");
+
+            let currentIndex = 0;
+
+            // Open lightbox
+            items.forEach((item, index) => {
+            item.addEventListener("click", () => {
+                currentIndex = index;
+                showItem(currentIndex);
+                lightbox.classList.add("active");
+            });
+            });
+
+            const lightboxDrive = document.getElementById("lightbox-drive");
+
+            function showItem(index) {
+                if (index < 0) index = items.length - 1;
+                if (index >= items.length) index = 0;
+                currentIndex = index;
+
+                // Reset
+                lightboxImg.style.display = "none";
+                lightboxVideo.style.display = "none";
+                lightboxDrive.style.display = "none";
+                lightboxVideo.pause();
+
+                updateLightboxNumber();
+
+
+                const item = items[currentIndex];
+                let type = item.dataset.type || (item.tagName === 'IMG' ? 'image' : 'video');
+
+                // If type is undefined, infer from tag
+                if (!type) {
+                    if (item.tagName === "IMG") type = "image";
+                    if (item.tagName === "VIDEO") type = "video";
+                }
+
+                if (type === 'drive') {
+                    const id = item.dataset.id;
+                    lightboxImg.style.display = 'none';
+                    lightboxVideo.style.display = 'none';
+                    lightboxDrive.style.display = 'block';
+                    lightboxDrive.src = `https://drive.google.com/file/d/${id}/preview`;
+                } else if (type === 'image') {
+                    lightboxDrive.style.display = 'none';
+                    lightboxVideo.style.display = 'none';
+                    lightboxImg.style.display = 'block';
+                    lightboxImg.src = item.src;
+                } else if (type === 'video') {
+                    lightboxDrive.style.display = 'none';
+                    lightboxImg.style.display = 'none';
+                    lightboxVideo.style.display = 'block';
+                    const videoSrc = item.dataset.src || item.querySelector("source").src;
+                    lightboxVideo.querySelector("source").src = videoSrc;
+                    lightboxVideo.load();
+                    lightboxVideo.play();
+                }
+
+            }
+
+
+
+            // --- UPDATE TOP-LEFT NUMBER IN LIGHTBOX ---
+            function updateLightboxNumber() {
+            const currentItem = items[currentIndex];
+
+            // Find the .photo-item container
+            const parentItem = currentItem.closest(".photo-item");
+
+            if (!parentItem) return;
+
+            // Read the <span class="photo-number"> inside the item
+            const numberSpan = parentItem.querySelector(".photo-number");
+
+            if (numberSpan) {
+                const number = numberSpan.textContent.trim();
+                document.getElementById("lightbox-index").textContent = number;
+                document.getElementById("lightbox-index").style.display = "block";
+            }
+            }
+
+
+            // Close
+            lightboxClose.addEventListener("click", (e) => {
+            e.stopPropagation();
+            lightbox.classList.remove("active");
+            lightboxVideo.pause();
+            document.getElementById("lightbox-index").style.display="none";
+            });
+
+            // Background click closes
+            lightbox.addEventListener("click", (e) => {
+            if (e.target === lightbox) {
+                lightbox.classList.remove("active");
+                lightboxVideo.pause();
+                document.getElementById("lightbox-index").style.display = "none";
+            }
+            });
+
+            // Prev / Next arrows
+            lightboxPrev.addEventListener("click", () => showItem(currentIndex - 1));
+            lightboxNext.addEventListener("click", () => showItem(currentIndex + 1));
+
+            // Keyboard navigation
+            document.addEventListener("keydown", (e) => {
+            if (!lightbox.classList.contains("active")) return;
+            if (e.key === "ArrowLeft") showItem(currentIndex - 1);
+            if (e.key === "ArrowRight") showItem(currentIndex + 1);
+            if (e.key === "Escape") lightbox.classList.remove("active");
+            });
+
+            // Swipe support for mobile
+            let touchStartX = 0;
+
+            lightbox.addEventListener("touchstart", (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+            });
+
+            lightbox.addEventListener("touchend", (e) => {
+            let touchEndX = e.changedTouches[0].screenX;
+            if (touchEndX < touchStartX - 50) {
+                // swipe left → next
+                showItem(currentIndex + 1);
+            }
+            if (touchEndX > touchStartX + 50) {
+                // swipe right → prev
+                showItem(currentIndex - 1);
+            }
+            });
+
+            function scrollToTop(){
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+                }
+
+                function scrollToBottom(){
+                window.scrollTo({
+                    top:document.body.scrollHeight, 
+                    behavior: 'smooth'
+                });
+                }
+        </script>
+    </body>
+</html>

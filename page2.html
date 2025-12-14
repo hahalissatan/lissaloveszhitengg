@@ -1,0 +1,188 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@400;600&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+        <title>Page 2</title>
+        <style>
+            body {
+            font-family: Arial, sans-serif;
+            background-color: #fff;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            z-index: 1;
+            font-family: 'Poppins', 'Nunito', 'Quicksand', 'Noto Sans SC', 'Microsoft YaHei', sans-serif;
+            }
+
+            #bg-blur, #bg-clear{
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+            }
+
+            #bg-clear{
+            display: none;
+            }
+
+            .content{
+            position: relative;
+            z-index: 1;
+            display: block;
+            transition: opacity 1.5s ease;
+            }
+
+            h1 {
+            margin: 20px 0;
+            /*color: #333;*/
+            }
+
+            .page {
+            padding: 30px;
+            height: 100vh;
+            background: url("image/lofi.jpg") center center / cover no-repeat;
+            color: #f0f0f0;
+            }
+
+            .back-button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            background: #ccc;
+            cursor: pointer;
+            font-size: 14px;
+            }
+
+            .back-button:active, .show-button:active{
+            transform: scale(0.95);
+            background-color: #aaa;
+            }
+
+            body.clear-bg::before{
+            backdrop-filter: none;
+            background: transparent;
+            }
+
+            .voice-message {
+            padding-top: 200px;
+            padding-bottom: 200px;
+            display: flex;
+            justify-content: center;
+            margin-top: 40px;
+            }
+
+            .voice-bubble {
+            display: flex;
+            align-items: center;
+            background: rgba(45, 40, 70, 0.9); /* deep purple-gray bubble like Instagram Lofi */
+            border-radius: 25px;
+            padding: 10px 15px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+            width: 80%;
+            max-width: 400px;
+            gap: 10px;
+            color: #f5f3ff; /* light text inside */
+            backdrop-filter: blur(8px); /* soft glow */
+            }
+
+            .play-btn {
+            border: none;
+            background: none;
+            font-size: 1.5em;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+            }
+
+            .play-btn:active {
+            transform: scale(0.9);
+            }
+
+            .progress-bar {
+            flex-grow: 1;
+            height: 5px;
+            background: #eee;
+            border-radius: 5px;
+            overflow: hidden;
+            position: relative;
+            }
+
+            .progress {
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(90deg, #00b09b, #96c93d);
+            transition: width 0.1s linear;
+            }
+
+            .timestamp {
+            font-size: 0.9em;
+            color: #555;
+            min-width: 40px;
+            text-align: right;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="page">
+            <h1 style="font-family: 'Poppins', 'Quicksand', 'Nunito', sans-serif; font-weight: 600; letter-spacing: 0.5px;">哭包👩🏿💕💕</h1>
+
+            <div class="voice-message">
+            <div class="voice-bubble">
+                <button id="playButton" class="play-btn">▶️</button>
+                <div class="progress-bar">
+                <div class="progress"></div>
+                </div>
+                <span class="timestamp" id="audioTime">0:00</span>
+            </div>
+            </div>
+
+            <audio id="voiceAudio" src="image/ilovezhitengsound.m4a"></audio>
+
+            <button class="back-button" onclick = "location.href='index.html'">Back</button>
+        </div>
+
+        <script>
+            // --- Page 2 Audio Player ---
+            const playButton = document.getElementById('playButton');
+            const audio = document.getElementById('voiceAudio');
+            const progress = document.querySelector('.progress');
+            const audioTime = document.getElementById('audioTime');
+
+            let isPlaying = false;
+
+            playButton.addEventListener('click', () => {
+            if (!audio) return;
+            if (isPlaying) {
+                audio.pause();
+                playButton.textContent = '▶️';
+            } else {
+                audio.play();
+                playButton.textContent = '⏸️';
+            }
+            isPlaying = !isPlaying;
+            });
+
+            audio.addEventListener('timeupdate', () => {
+            const progressPercent = (audio.currentTime / audio.duration) * 100;
+            progress.style.width = `${progressPercent}%`;
+
+            // Format time (mm:ss)
+            const minutes = Math.floor(audio.currentTime / 60);
+            const seconds = Math.floor(audio.currentTime % 60);
+            audioTime.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+            });
+
+            audio.addEventListener('ended', () => {
+            isPlaying = false;
+            playButton.textContent = '▶️';
+            progress.style.width = '0%';
+            audioTime.textContent = '0:00';
+            });
+        </script>
+    </body>
+</html>

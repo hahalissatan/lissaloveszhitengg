@@ -1,0 +1,410 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@400;600&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+        <title>July</title>
+        <style>
+            body {
+            font-family: Arial, sans-serif;
+            background-color: #fff;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            z-index: 1;
+            font-family: 'Poppins', 'Nunito', 'Quicksand', 'Noto Sans SC', 'Microsoft YaHei', sans-serif;
+            }
+
+            #bg-blur, #bg-clear{
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+            }
+
+            #bg-clear{
+            display: none;
+            }
+
+            .content{
+            position: relative;
+            z-index: 1;
+            display: block;
+            transition: opacity 1.5s ease;
+            }
+
+            h1 {
+            margin: 20px 0;
+            /*color: #333;*/
+            }
+
+            .page {
+            padding: 30px;
+            }
+
+            .back-button, .show-button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            background: #ccc;
+            cursor: pointer;
+            font-size: 14px;
+            }
+
+            .back-button:active, .show-button:active{
+            transform: scale(0.95);
+            background-color: #aaa;
+            }
+
+            .floating-button{
+            position: fixed;
+            bottom: 15px;
+            right: 15px;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            border: 1px solid #333;
+            background: transparent;
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            z-index: 1000;
+            }
+
+            .floating1{
+            bottom: 15px;
+            right: 10px;
+            }
+
+            .floating2{
+            top: 25px;
+            right: 10px;
+            }
+
+            .floating-button:active{
+            transform: scale(0.95);
+            background-color: #aaa;
+            color: #fff;
+            }
+
+            .memories-title {
+            font-size: 1.2em; /* Small, like phone header */
+            color: #e60073;
+            margin: 15px 0 5px;
+            text-align: center;
+            }
+
+            .subtitle {
+            font-size: 0.8em;
+            color: #777;
+            margin-bottom: 20px;
+            text-align: center;
+            }
+
+            .date-heading {
+            font-size: 0.9em;
+            color: #333;
+            margin: 15px 0 8px 5%;
+            text-align: left;
+            }
+
+            .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); /* 3 per row like iPhone */
+            gap: 3px;
+            margin: 0 auto 20px;
+            max-width: 420px; /* like iPhone 12 Pro width */
+            }
+
+            .photo-grid img, .photo-grid video {
+            width: 100%;
+            aspect-ratio: 1 / 1; /* force square */
+            object-fit: cover;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: transform 0.2s;
+            display: block;
+            }
+
+            .photo-grid img:hover, .photo-grid video:hover {
+            transform: scale(1.03);
+            }
+
+            .photo-item{
+            position: relative;
+            }
+            .photo-number{
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            background: rgba(0,0,0,0.6);
+            color: #fff;
+            padding: 2px 6px;
+            font-size: 0.7em;
+            border-radius: 4px;
+            z-index: 10;
+            }
+
+            /* Lightbox */
+            #lightbox {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            }
+
+            #lightbox img {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 10px;
+            }
+
+            #lightbox.active {
+            display: flex;
+            }
+
+            #lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 25px;
+            font-size: 2rem;
+            font-weight: bold;
+            color: white;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+            }
+
+            #lightbox-close:hover {
+            transform: scale(1.2);
+            color: #ff4d4d;
+            }
+
+            #lightbox-prev, #lightbox-next {
+            position: absolute;
+            top: 50%;
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: white;
+            cursor: pointer;
+            user-select: none;
+            transform: translateY(-50%);
+            padding: 10px;
+            transition: color 0.2s ease;
+            }
+
+            #lightbox-prev { left: 20px; }
+            #lightbox-next { right: 20px; }
+
+            #lightbox-prev:hover, #lightbox-next:hover {
+            color: #ff4d4d;
+            }
+
+        </style>
+    </head>
+
+    <body>
+        <div class="page">
+        <button class="floating-button floating2" onclick="scrollToTop()">↑</button>
+        <button class="floating-button floating1" onclick="scrollToBottom()">↓</button>
+        <h1 class="memories-title">July ~ ✿♥‿♥</h1>
+        <p class="subtitle">Little pieces of our story 💕📸✨</p>
+
+        <!-- Updated HTML with numbering on each photo per day. Only the modified Sections 1 & 2 are shown here for clarity. You can merge these back into your full file. -->///////
+
+        <!-- Lightbox Number Display -->
+        <span id="lightbox-index" style="position:fixed; top:10px; left:10px; color:white; background:rgba(0,0,0,0.6); padding:6px 10px; border-radius:6px; font-size:1rem; z-index:2000; display:none;">1</span>
+
+        <div id="lightbox">
+          <span id="lightbox-close">&times;</span>
+          <span id="lightbox-prev">&#10094;</span>
+          <img id="lightbox-img" src="" alt="enlarged photo">
+          <video id="lightbox-video" controls loop style="display:none; max-width:90%; max-height:90%;">
+            <source src="" type="video/mp4">
+          </video>
+          <span id="lightbox-next">&#10095;</span>
+        </div>
+
+        <button class="back-button" onclick="location.href='index.html'">Back</button>
+
+        <script>
+            // Arrays with media info for each day///////////
+            
+
+            // Populate all new days////////////////
+            
+
+
+            // Function to populate grid dynamically
+            function populateGrid(containerId, mediaArray) {
+                const container = document.getElementById(containerId);
+                mediaArray.forEach((item, idx) => {
+                    const div = document.createElement('div');
+                    div.className = 'photo-item';
+
+                    const numberSpan = document.createElement('span');
+                    numberSpan.className = 'photo-number';
+                    numberSpan.textContent = idx + 1;
+
+                    div.appendChild(numberSpan);
+
+                    if (item.type === 'image') {
+                    const img = document.createElement('img');
+                    img.src = item.src;
+                    img.loading = 'lazy';
+                    div.appendChild(img);
+                    } else if (item.type === 'video') {
+                    const video = document.createElement('video');
+                    video.muted = true;
+                    video.playsInline = true;
+                    video.preload = 'metadata';
+                    if (item.poster) video.poster = item.poster;
+                    const source = document.createElement('source');
+                    source.src = item.src;
+                    source.type = 'video/mp4';
+                    video.appendChild(source);
+                    div.appendChild(video);
+                    }
+
+                    container.appendChild(div);
+                });
+            }
+
+            const items = document.querySelectorAll(".photo-grid img, .photo-grid video");
+            const lightbox = document.getElementById("lightbox");
+            const lightboxImg = document.getElementById("lightbox-img");
+            const lightboxVideo = document.getElementById("lightbox-video");
+            const lightboxClose = document.getElementById("lightbox-close");
+            const lightboxPrev = document.getElementById("lightbox-prev");
+            const lightboxNext = document.getElementById("lightbox-next");
+
+            let currentIndex = 0;
+
+            // Open lightbox
+            items.forEach((item, index) => {
+            item.addEventListener("click", () => {
+                currentIndex = index;
+                showItem(currentIndex);
+                lightbox.classList.add("active");
+            });
+            });
+
+            function showItem(index) {
+            if (index < 0) index = items.length - 1;
+            if (index >= items.length) index = 0;
+            currentIndex = index;
+
+            // Reset both
+            lightboxImg.style.display = "none";
+            lightboxVideo.style.display = "none";
+            lightboxVideo.pause();
+
+            updateLightboxNumber();
+            if (items[currentIndex].tagName === "IMG") {
+                // Show image
+                lightboxImg.src = items[currentIndex].src;
+                lightboxImg.style.display = "block";
+            } else {
+                // Show video
+                const src = items[currentIndex].querySelector("source").src;
+                lightboxVideo.querySelector("source").src = src;
+                lightboxVideo.load();
+                lightboxVideo.muted = false; // unmuted in lightbox
+                lightboxVideo.style.display = "block";
+                lightboxVideo.play();
+            }
+            }
+
+            // --- UPDATE TOP-LEFT NUMBER IN LIGHTBOX ---
+            function updateLightboxNumber() {
+            const currentItem = items[currentIndex];
+
+            // Find the .photo-item container
+            const parentItem = currentItem.closest(".photo-item");
+
+            if (!parentItem) return;
+
+            // Read the <span class="photo-number"> inside the item
+            const numberSpan = parentItem.querySelector(".photo-number");
+
+            if (numberSpan) {
+                const number = numberSpan.textContent.trim();
+                document.getElementById("lightbox-index").textContent = number;
+                document.getElementById("lightbox-index").style.display = "block";
+            }
+            }
+
+
+            // Close
+            lightboxClose.addEventListener("click", (e) => {
+            e.stopPropagation();
+            lightbox.classList.remove("active");
+            lightboxVideo.pause();
+            document.getElementById("lightbox-index").style.display="none";
+            });
+
+            // Background click closes
+            lightbox.addEventListener("click", (e) => {
+            if (e.target === lightbox) {
+                lightbox.classList.remove("active");
+                lightboxVideo.pause();
+                document.getElementById("lightbox-index").style.display = "none";
+            }
+            });
+
+            // Prev / Next arrows
+            lightboxPrev.addEventListener("click", () => showItem(currentIndex - 1));
+            lightboxNext.addEventListener("click", () => showItem(currentIndex + 1));
+
+            // Keyboard navigation
+            document.addEventListener("keydown", (e) => {
+            if (!lightbox.classList.contains("active")) return;
+            if (e.key === "ArrowLeft") showItem(currentIndex - 1);
+            if (e.key === "ArrowRight") showItem(currentIndex + 1);
+            if (e.key === "Escape") lightbox.classList.remove("active");
+            });
+
+            // Swipe support for mobile
+            let touchStartX = 0;
+
+            lightbox.addEventListener("touchstart", (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+            });
+
+            lightbox.addEventListener("touchend", (e) => {
+            let touchEndX = e.changedTouches[0].screenX;
+            if (touchEndX < touchStartX - 50) {
+                // swipe left → next
+                showItem(currentIndex + 1);
+            }
+            if (touchEndX > touchStartX + 50) {
+                // swipe right → prev
+                showItem(currentIndex - 1);
+            }
+            });
+
+            function scrollToTop(){
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+                }
+
+                function scrollToBottom(){
+                window.scrollTo({
+                    top:document.body.scrollHeight, 
+                    behavior: 'smooth'
+                });
+                }
+        </script>
+    </body>
+</html>

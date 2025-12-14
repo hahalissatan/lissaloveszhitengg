@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Our Memories</title>
+  <style>
+    body {
+      font-family: "Comic Sans MS", cursive, sans-serif;
+      background: #fff0f6;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+    }
+
+    h1 {
+      font-size: 2.5em;
+      color: #e60073;
+      margin: 30px 0 10px;
+    }
+
+    .subtitle {
+      font-size: 1.2em;
+      color: #555;
+      margin-bottom: 40px;
+    }
+
+    .photo-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 12px;
+      margin: 0 auto 50px;
+      max-width: 90%;
+    }
+
+    .photo-grid img {
+      width: 100%;
+      height: auto;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: transform 0.3s;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    }
+
+    .photo-grid img:hover {
+      transform: scale(1.05);
+    }
+
+    /* Lightbox */
+    #lightbox {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.9);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+
+    #lightbox img {
+      max-width: 90%;
+      max-height: 90%;
+      border-radius: 15px;
+      box-shadow: 0 4px 15px rgba(255,255,255,0.5);
+    }
+
+    #lightbox.active {
+      display: flex;
+    }
+  </style>
+</head>
+<body>
+  <h1>Our Memories ✿♥‿♥</h1>
+  <p class="subtitle">Little pieces of our story, captured forever 💕📸✨</p>
+
+  <div class="photo-grid">
+    <img src="image/couple_sitting_together.png" alt="Memory 1">
+    <img src="image/IMG_0946.PNG" alt="Memory 2">
+    <img src="image/kissing_girl.png" alt="Memory 3">
+    <img src="image/lissa-blur.jpg" alt="Memory 4">
+    <img src="image/lissa.jpg" alt="Memory 5">
+    <img src="image/WhatsApp Image 2025-09-29 at 13.27.24_4d2fb251.jpg" alt="Memory 6">
+    <img src="image/WhatsApp Image 2025-09-29 at 13.27.24_c49bfaec.jpg" alt="Memory 7">
+    <img src="image/kissing_girl.png" alt="Memory 8">
+    <img src="image/lissa.jpg" alt="Memory 9">
+    <img src="image/lissa-blur.jpg" alt="Memory 10">
+  </div>
+
+  <!-- Lightbox -->
+  <div id="lightbox"></div>
+
+  <script>
+    const photos = document.querySelectorAll(".photo-grid img");
+    const lightbox = document.getElementById("lightbox");
+
+    photos.forEach(photo => {
+      photo.addEventListener("click", () => {
+        lightbox.classList.add("active");
+        const img = document.createElement("img");
+        img.src = photo.src;
+        while (lightbox.firstChild) {
+          lightbox.removeChild(lightbox.firstChild);
+        }
+        lightbox.appendChild(img);
+      });
+    });
+
+    lightbox.addEventListener("click", () => {
+      lightbox.classList.remove("active");
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,606 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@400;600&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+        <title>July</title>
+        <style>
+            body {
+            font-family: Arial, sans-serif;
+            background-color: #fff;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            z-index: 1;
+            font-family: 'Poppins', 'Nunito', 'Quicksand', 'Noto Sans SC', 'Microsoft YaHei', sans-serif;
+            }
+
+            #bg-blur, #bg-clear{
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+            }
+
+            #bg-clear{
+            display: none;
+            }
+
+            .content{
+            position: relative;
+            z-index: 1;
+            display: block;
+            transition: opacity 1.5s ease;
+            }
+
+            h1 {
+            margin: 20px 0;
+            /*color: #333;*/
+            }
+
+            .page {
+            padding: 30px;
+            }
+
+            .back-button, .show-button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            background: #ccc;
+            cursor: pointer;
+            font-size: 14px;
+            }
+
+            .back-button:active, .show-button:active{
+            transform: scale(0.95);
+            background-color: #aaa;
+            }
+
+            .floating-button{
+            position: fixed;
+            bottom: 15px;
+            right: 15px;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            border: 1px solid #333;
+            background: transparent;
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            z-index: 1000;
+            }
+
+            .floating1{
+            bottom: 15px;
+            right: 10px;
+            }
+
+            .floating2{
+            top: 25px;
+            right: 10px;
+            }
+
+            .floating-button:active{
+            transform: scale(0.95);
+            background-color: #aaa;
+            color: #fff;
+            }
+
+            .memories-title {
+            font-size: 1.2em; /* Small, like phone header */
+            color: #e60073;
+            margin: 15px 0 5px;
+            text-align: center;
+            }
+
+            .subtitle {
+            font-size: 0.8em;
+            color: #777;
+            margin-bottom: 20px;
+            text-align: center;
+            }
+
+            .date-heading {
+            font-size: 0.9em;
+            color: #333;
+            margin: 15px 0 8px 5%;
+            text-align: left;
+            }
+
+            .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); /* 3 per row like iPhone */
+            gap: 3px;
+            margin: 0 auto 20px;
+            max-width: 420px; /* like iPhone 12 Pro width */
+            }
+
+            .photo-grid img, .photo-grid video {
+            width: 100%;
+            aspect-ratio: 1 / 1; /* force square */
+            object-fit: cover;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: transform 0.2s;
+            display: block;
+            }
+
+            .photo-grid img:hover, .photo-grid video:hover {
+            transform: scale(1.03);
+            }
+
+            .photo-item{
+            position: relative;
+            }
+            .photo-number{
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            background: rgba(0,0,0,0.6);
+            color: #fff;
+            padding: 2px 6px;
+            font-size: 0.7em;
+            border-radius: 4px;
+            z-index: 10;
+            }
+
+            /* Lightbox */
+            #lightbox {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            }
+
+            #lightbox img {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 10px;
+            }
+
+            #lightbox.active {
+            display: flex;
+            }
+
+            #lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 25px;
+            font-size: 2rem;
+            font-weight: bold;
+            color: white;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+            }
+
+            #lightbox-close:hover {
+            transform: scale(1.2);
+            color: #ff4d4d;
+            }
+
+            #lightbox-prev, #lightbox-next {
+            position: absolute;
+            top: 50%;
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: white;
+            cursor: pointer;
+            user-select: none;
+            transform: translateY(-50%);
+            padding: 10px;
+            transition: color 0.2s ease;
+            }
+
+            #lightbox-prev { left: 20px; }
+            #lightbox-next { right: 20px; }
+
+            #lightbox-prev:hover, #lightbox-next:hover {
+            color: #ff4d4d;
+            }
+
+        </style>
+    </head>
+
+    <body>
+        <div class="page">
+        <button class="floating-button floating2" onclick="scrollToTop()">↑</button>
+        <button class="floating-button floating1" onclick="scrollToBottom()">↓</button>
+        <h1 class="memories-title">July ~ ✿♥‿♥</h1>
+        <p class="subtitle">Little pieces of our story 💕📸✨</p>
+
+        <!-- Updated HTML with numbering on each photo per day. Only the modified Sections 1 & 2 are shown here for clarity. You can merge these back into your full file. -->
+
+        <h2 class="date-heading">12/7/2025</h2>
+        <div class="photo-grid" id="day1-grid"></div>
+
+        <h2 class="date-heading">13/7/2025</h2>
+        <div class="photo-grid" id="day2-grid"></div>
+
+
+        <h2 class="date-heading">14/7/2025</h2>
+        <div class="photo-grid" id="day3-grid"></div>
+
+        <h2 class="date-heading">18/7/2025</h2>
+        <div class="photo-grid" id="day4-grid"></div>
+
+        <h2 class="date-heading">19-20/7/2025</h2>
+        <div class="photo-grid" id="day5-grid"></div>
+
+        <h2 class="date-heading">22/7/2025</h2>
+        <div class="photo-grid" id="day6-grid"></div>
+
+        <h2 class="date-heading">23/7/2025</h2>
+        <div class="photo-grid" id="day7-grid"></div>
+
+        <h2 class="date-heading">24/7/2025</h2>
+        <div class="photo-grid" id="day8-grid"></div>
+
+        <h2 class="date-heading">26/7/2025</h2>
+        <div class="photo-grid" id="day9-grid"></div>
+
+        <h2 class="date-heading">27-29/7/2025</h2>
+        <div class="photo-grid" id="day10-grid"></div>
+
+        <h2 class="date-heading">30/7/2025</h2>
+        <div class="photo-grid" id="day11-grid"></div>        
+
+        <h2 class="date-heading">31/7/2025</h2>
+        <div class="photo-grid" id="day12-grid"></div>
+
+        <!-- Lightbox Number Display -->
+        <span id="lightbox-index" style="position:fixed; top:10px; left:10px; color:white; background:rgba(0,0,0,0.6); padding:6px 10px; border-radius:6px; font-size:1rem; z-index:2000; display:none;">1</span>
+
+        <div id="lightbox">
+          <span id="lightbox-close">&times;</span>
+          <span id="lightbox-prev">&#10094;</span>
+          <img id="lightbox-img" src="" alt="enlarged photo">
+          <video id="lightbox-video" controls loop style="display:none; max-width:90%; max-height:90%;">
+            <source src="" type="video/mp4">
+          </video>
+          <span id="lightbox-next">&#10095;</span>
+        </div>
+
+        <button class="back-button" onclick="location.href='index.html'">Back</button>
+
+        <script>
+            // Arrays with media info for each day
+            const day7_12 = [
+            {type: 'video', src: 'image/7.12/1.MOV', poster: 'image/7.12/1.jpg'},
+            {type: 'image', src: 'image/7.12/2.JPEG'},
+            {type: 'image', src: 'image/7.12/3.JPG'},
+            {type: 'image', src: 'image/7.12/4.JPG'},
+            {type: 'image', src: 'image/7.12/5.JPG'},
+            {type: 'image', src: 'image/7.12/6.JPEG'},
+            {type: 'video', src: 'image/7.12/7.MP4', poster: 'image/7.12/7.jpg'},
+            {type: 'image', src: 'image/7.12/8.JPEG'},
+            {type: 'image', src: 'image/7.12/9.JPG'},
+            {type: 'image', src: 'image/7.12/10.JPG'},
+            {type: 'video', src: 'image/7.12/11.mov', poster: 'image/7.12/11.jpg'},
+            {type: 'image', src: 'image/7.12/12.JPG'},
+            {type: 'image', src: 'image/7.12/13.JPG'},
+            {type: 'image', src: 'image/7.12/14.JPEG'},
+            {type: 'image', src: 'image/7.12/15.JPEG'},
+            {type: 'video', src: 'image/7.12/16.MOV', poster: 'image/7.12/16.jpg'},
+            {type: 'video', src: 'image/7.12/17.MOV', poster: 'image/7.12/17.jpg'},
+            {type: 'image', src: 'image/7.12/18.JPEG'},
+            {type: 'image', src: 'image/7.12/19.JPEG'},
+            {type: 'image', src: 'image/7.12/20.JPEG'},
+            {type: 'image', src: 'image/7.12/21.JPG'},
+            {type: 'image', src: 'image/7.12/22.JPG'},
+            {type: 'image', src: 'image/7.12/23.JPG'},
+            {type: 'video', src: 'image/7.12/24.MP4', poster: 'image/7.12/24.jpg'},
+            {type: 'image', src: 'image/7.12/25.JPG'},
+            {type: 'image', src: 'image/7.12/26.JPEG'},
+            {type: 'image', src: 'image/7.12/27.JPEG'}
+            ];
+
+            const day7_13 = [
+            {type: 'image', src: 'image/7.13/1.jpg'},
+            {type: 'video', src: 'image/7.13/2.mov', poster: 'image/7.13/2.jpg'},
+            {type: 'image', src: 'image/7.13/3.jpg'},
+            {type: 'image', src: 'image/7.13/4.jpg'},
+            {type: 'image', src: 'image/7.13/5.jpg'},
+            {type: 'image', src: 'image/7.13/6.jpg'},
+            {type: 'image', src: 'image/7.13/7.jpg'},
+            {type: 'image', src: 'image/7.13/8.jpg'},
+            {type: 'image', src: 'image/7.13/9.jpg'},
+            {type: 'image', src: 'image/7.13/10.jpg'},
+            {type: 'image', src: 'image/7.13/11.jpg'},
+            {type: 'image', src: 'image/7.13/12.jpg'},
+            {type: 'image', src: 'image/7.13/13.jpg'},
+            {type: 'image', src: 'image/7.13/14.jpg'},
+            {type: 'image', src: 'image/7.13/15.jpg'},
+            {type: 'image', src: 'image/7.13/16.jpg'},
+            {type: 'image', src: 'image/7.13/17.jpg'},
+            {type: 'image', src: 'image/7.13/18.PNG'},
+            {type: 'image', src: 'image/7.13/19.PNG'},
+            {type: 'video', src: 'image/7.13/20.mov', poster: 'image/7.13/20.jpg'},
+            {type: 'image', src: 'image/7.13/21.jpg'},
+            {type: 'image', src: 'image/7.13/22.jpg'},
+            {type: 'image', src: 'image/7.13/23.jpg'},
+            {type: 'video', src: 'image/7.13/24.mov', poster: 'image/7.13/24.jpg'}
+            ];
+
+            const day7_14 = [
+            {type: 'image', src: 'image/7.14/1.JPG'}
+            ];
+
+            const day7_18 = [
+            {type: 'image', src: 'image/7.18/1.jpg'},
+            {type: 'image', src: 'image/7.18/2.PNG'},
+            {type: 'image', src: 'image/7.18/3.PNG'},
+            {type: 'image', src: 'image/7.18/4.PNG'}
+            ];
+
+            const day7_19 = [
+            {type: 'image', src: 'image/7.19,20/1.jpg'},
+            {type: 'image', src: 'image/7.19,20/2.PNG'},
+            {type: 'image', src: 'image/7.19,20/3.PNG'},
+            {type: 'image', src: 'image/7.19,20/4.PNG'}
+            ];
+
+            const day7_22 = [
+            {type: 'video', src: 'image/7.22/1.mov', poster: 'image/7.22/1.jpg'},
+            {type: 'video', src: 'image/7.22/2.mov', poster: 'image/7.22/2.jpg'},
+            {type: 'video', src: 'image/7.22/3.MOV', poster: 'image/7.22/3.jpg'},
+            {type: 'image', src: 'image/7.22/4.PNG'}
+            ];
+
+            const day7_23 = [
+            {type: 'video', src: 'image/7.23/1.MOV', poster: 'image/7.23/1.jpg'},
+            {type: 'image', src: 'image/7.23/2.JPEG'},
+            {type: 'image', src: 'image/7.23/3.JPEG'},
+            {type: 'image', src: 'image/7.23/4.JPEG'},
+            {type: 'video', src: 'image/7.23/5.MP4', poster: 'image/7.23/5.jpg'}
+            ];
+
+            const day7_24 = [
+            {type: 'image', src: 'image/7.24/1.jpg'},
+            {type: 'video', src: 'image/7.24/2.mov', poster: 'image/7.24/2.jpg'}
+            ]
+
+            const day7_26 = [
+            {type: 'image', src: 'image/7.26/1.JPEG'},
+            {type: 'image', src: 'image/7.26/2.JPEG'},
+            {type: 'image', src: 'image/7.26/3.JPEG'},
+            {type: 'image', src: 'image/7.26/4.jpg'},
+            {type: 'image', src: 'image/7.26/5.jpg'},
+            ]
+
+            const day7_27 = [
+            {type: 'image', src: 'image/7.27-29/1.jpg'},
+            {type: 'image', src: 'image/7.27-29/2.jpg'},
+            {type: 'image', src: 'image/7.27-29/3.PNG'},
+            {type: 'image', src: 'image/7.27-29/4.PNG'},
+            {type: 'image', src: 'image/7.27-29/5.PNG'},
+            {type: 'image', src: 'image/7.27-29/6.PNG'},
+            {type: 'image', src: 'image/7.27-29/7.PNG'},
+            {type: 'image', src: 'image/7.27-29/8.PNG'},
+            {type: 'image', src: 'image/7.27-29/9.PNG'},
+            {type: 'image', src: 'image/7.27-29/10.PNG'},
+            {type: 'image', src: 'image/7.27-29/11.PNG'},
+            {type: 'image', src: 'image/7.27-29/12.PNG'},
+            {type: 'image', src: 'image/7.27-29/13.PNG'},
+            {type: 'image', src: 'image/7.27-29/14.PNG'},
+            {type: 'image', src: 'image/7.27-29/15.PNG'},
+            {type: 'image', src: 'image/7.27-29/16.PNG'},
+            {type: 'image', src: 'image/7.27-29/17.PNG'},
+            {type: 'image', src: 'image/7.27-29/18.PNG'},
+            {type: 'image', src: 'image/7.27-29/19.PNG'},
+            {type: 'image', src: 'image/7.27-29/20.PNG'},
+            {type: 'image', src: 'image/7.27-29/21.PNG'},
+            {type: 'image', src: 'image/7.27-29/22.PNG'},
+            ]
+
+            const day7_30 = [
+            {type: 'video', src: 'image/7.30/1.mov', poster: 'image/7.30/1.jpg'},
+            {type: 'image', src: 'image/7.30/2.PNG'}
+            ]
+
+            const day7_31 = [
+            {type: 'image', src: 'image/7.31/1.jpg'},
+            {type: 'video', src: 'image/7.31/2.mov', poster: 'image/7.31/2.jpg'},
+            {type: 'video', src: 'image/7.31/3.mov', poster: 'image/7.31/3.jpg'},
+            {type: 'image', src: 'image/7.31/4.JPEG'},
+            {type: 'video', src: 'image/7.31/5.mov', poster: 'image/7.31/5.jpg'},
+            {type: 'image', src: 'image/7.31/6.PNG'},
+            {type: 'video', src: 'image/7.31/7.mov', poster: 'image/7.31/7.jpg'},
+            {type: 'video', src: 'image/7.31/8.mov', poster: 'image/7.31/8.jpg'},
+            {type: 'image', src: 'image/7.31/9.PNG'},
+            {type: 'image', src: 'image/7.31/10.PNG'},
+            {type: 'image', src: 'image/7.31/11.PNG'},
+            {type: 'image', src: 'image/7.31/12.PNG'},
+            {type: 'image', src: 'image/7.31/13.PNG'},
+            {type: 'image', src: 'image/7.31/14.PNG'}
+            ]
+
+            // Populate all new days
+            populateGrid('day1-grid', day7_12);
+            populateGrid('day2-grid', day7_13);
+            populateGrid('day3-grid', day7_14);
+            populateGrid('day4-grid', day7_18);
+            populateGrid('day5-grid', day7_19);
+            populateGrid('day6-grid', day7_22);
+            populateGrid('day7-grid', day7_23);
+            populateGrid('day8-grid', day7_24);
+            populateGrid('day9-grid', day7_26);
+            populateGrid('day10-grid', day7_27);
+            populateGrid('day11-grid', day7_30);
+            populateGrid('day12-grid', day7_31);
+
+
+            // Function to populate grid dynamically
+            function populateGrid(containerId, mediaArray) {
+                const container = document.getElementById(containerId);
+                mediaArray.forEach((item, idx) => {
+                    const div = document.createElement('div');
+                    div.className = 'photo-item';
+
+                    const numberSpan = document.createElement('span');
+                    numberSpan.className = 'photo-number';
+                    numberSpan.textContent = idx + 1;
+
+                    div.appendChild(numberSpan);
+
+                    if (item.type === 'image') {
+                    const img = document.createElement('img');
+                    img.src = item.src;
+                    img.loading = 'lazy';
+                    div.appendChild(img);
+                    } else if (item.type === 'video') {
+                    const video = document.createElement('video');
+                    video.muted = true;
+                    video.playsInline = true;
+                    video.preload = 'metadata';
+                    if (item.poster) video.poster = item.poster;
+                    const source = document.createElement('source');
+                    source.src = item.src;
+                    source.type = 'video/mp4';
+                    video.appendChild(source);
+                    div.appendChild(video);
+                    }
+
+                    container.appendChild(div);
+                });
+            }
+
+            const items = document.querySelectorAll(".photo-grid img, .photo-grid video");
+            const lightbox = document.getElementById("lightbox");
+            const lightboxImg = document.getElementById("lightbox-img");
+            const lightboxVideo = document.getElementById("lightbox-video");
+            const lightboxClose = document.getElementById("lightbox-close");
+            const lightboxPrev = document.getElementById("lightbox-prev");
+            const lightboxNext = document.getElementById("lightbox-next");
+
+            let currentIndex = 0;
+
+            // Open lightbox
+            items.forEach((item, index) => {
+            item.addEventListener("click", () => {
+                currentIndex = index;
+                showItem(currentIndex);
+                lightbox.classList.add("active");
+            });
+            });
+
+            function showItem(index) {
+            if (index < 0) index = items.length - 1;
+            if (index >= items.length) index = 0;
+            currentIndex = index;
+
+            // Reset both
+            lightboxImg.style.display = "none";
+            lightboxVideo.style.display = "none";
+            lightboxVideo.pause();
+
+            updateLightboxNumber();
+            if (items[currentIndex].tagName === "IMG") {
+                // Show image
+                lightboxImg.src = items[currentIndex].src;
+                lightboxImg.style.display = "block";
+            } else {
+                // Show video
+                const src = items[currentIndex].querySelector("source").src;
+                lightboxVideo.querySelector("source").src = src;
+                lightboxVideo.load();
+                lightboxVideo.muted = false; // unmuted in lightbox
+                lightboxVideo.style.display = "block";
+                lightboxVideo.play();
+            }
+            }
+
+            // --- UPDATE TOP-LEFT NUMBER IN LIGHTBOX ---
+            function updateLightboxNumber() {
+            const currentItem = items[currentIndex];
+
+            // Find the .photo-item container
+            const parentItem = currentItem.closest(".photo-item");
+
+            if (!parentItem) return;
+
+            // Read the <span class="photo-number"> inside the item
+            const numberSpan = parentItem.querySelector(".photo-number");
+
+            if (numberSpan) {
+                const number = numberSpan.textContent.trim();
+                document.getElementById("lightbox-index").textContent = number;
+                document.getElementById("lightbox-index").style.display = "block";
+            }
+            }
+
+
+            // Close
+            lightboxClose.addEventListener("click", (e) => {
+            e.stopPropagation();
+            lightbox.classList.remove("active");
+            lightboxVideo.pause();
+            document.getElementById("lightbox-index").style.display="none";
+            });
+
+            // Background click closes
+            lightbox.addEventListener("click", (e) => {
+            if (e.target === lightbox) {
+                lightbox.classList.remove("active");
+                lightboxVideo.pause();
+                document.getElementById("lightbox-index").style.display = "none";
+            }
+            });
+
+            // Prev / Next arrows
+            lightboxPrev.addEventListener("click", () => showItem(currentIndex - 1));
+            lightboxNext.addEventListener("click", () => showItem(currentIndex + 1));
+
+            // Keyboard navigation
+            document.addEventListener("keydown", (e) => {
+            if (!lightbox.classList.contains("active")) return;
+            if (e.key === "ArrowLeft") showItem(currentIndex - 1);
+            if (e.key === "ArrowRight") showItem(currentIndex + 1);
+            if (e.key === "Escape") lightbox.classList.remove("active");
+            });
+
+            // Swipe support for mobile
+            let touchStartX = 0;
+
+            lightbox.addEventListener("touchstart", (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+            });
+
+            lightbox.addEventListener("touchend", (e) => {
+            let touchEndX = e.changedTouches[0].screenX;
+            if (touchEndX < touchStartX - 50) {
+                // swipe left → next
+                showItem(currentIndex + 1);
+            }
+            if (touchEndX > touchStartX + 50) {
+                // swipe right → prev
+                showItem(currentIndex - 1);
+            }
+            });
+
+            function scrollToTop(){
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+                }
+
+                function scrollToBottom(){
+                window.scrollTo({
+                    top:document.body.scrollHeight, 
+                    behavior: 'smooth'
+                });
+                }
+        </script>
+    </body>
+</html>

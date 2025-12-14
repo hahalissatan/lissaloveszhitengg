@@ -1,0 +1,795 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@400;600&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+        <title>September</title>
+        <style>
+            body {
+            font-family: Arial, sans-serif;
+            background-color: #fff;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            z-index: 1;
+            font-family: 'Poppins', 'Nunito', 'Quicksand', 'Noto Sans SC', 'Microsoft YaHei', sans-serif;
+            }
+
+            #bg-blur, #bg-clear{
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+            }
+
+            #bg-clear{
+            display: none;
+            }
+
+            .content{
+            position: relative;
+            z-index: 1;
+            display: block;
+            transition: opacity 1.5s ease;
+            }
+
+            h1 {
+            margin: 20px 0;
+            /*color: #333;*/
+            }
+
+            .page {
+            padding: 30px;
+            }
+
+            .back-button, .show-button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            background: #ccc;
+            cursor: pointer;
+            font-size: 14px;
+            }
+
+            .back-button:active, .show-button:active{
+            transform: scale(0.95);
+            background-color: #aaa;
+            }
+
+            .floating-button{
+            position: fixed;
+            bottom: 15px;
+            right: 15px;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            border: 1px solid #333;
+            background: transparent;
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            z-index: 1000;
+            }
+
+            .floating1{
+            bottom: 15px;
+            right: 10px;
+            }
+
+            .floating2{
+            top: 25px;
+            right: 10px;
+            }
+
+            .floating-button:active{
+            transform: scale(0.95);
+            background-color: #aaa;
+            color: #fff;
+            }
+
+            .memories-title {
+            font-size: 1.2em; /* Small, like phone header */
+            color: #e60073;
+            margin: 15px 0 5px;
+            text-align: center;
+            }
+
+            .subtitle {
+            font-size: 0.8em;
+            color: #777;
+            margin-bottom: 20px;
+            text-align: center;
+            }
+
+            .date-heading {
+            font-size: 0.9em;
+            color: #333;
+            margin: 15px 0 8px 5%;
+            text-align: left;
+            }
+
+            .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); /* 3 per row like iPhone */
+            gap: 3px;
+            margin: 0 auto 20px;
+            max-width: 420px; /* like iPhone 12 Pro width */
+            }
+
+            .photo-grid img, .photo-grid video {
+            width: 100%;
+            aspect-ratio: 1 / 1; /* force square */
+            object-fit: cover;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: transform 0.2s;
+            display: block;
+            }
+
+            .photo-grid img:hover, .photo-grid video:hover {
+            transform: scale(1.03);
+            }
+
+            .photo-item{
+            position: relative;
+            }
+            .photo-number{
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            background: rgba(0,0,0,0.6);
+            color: #fff;
+            padding: 2px 6px;
+            font-size: 0.7em;
+            border-radius: 4px;
+            z-index: 10;
+            }
+
+            /* Lightbox */
+            #lightbox {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            }
+
+            #lightbox img {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 10px;
+            }
+
+            #lightbox.active {
+            display: flex;
+            }
+
+            #lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 25px;
+            font-size: 2rem;
+            font-weight: bold;
+            color: white;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+            }
+
+            #lightbox-close:hover {
+            transform: scale(1.2);
+            color: #ff4d4d;
+            }
+
+            #lightbox-prev, #lightbox-next {
+            position: absolute;
+            top: 50%;
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: white;
+            cursor: pointer;
+            user-select: none;
+            transform: translateY(-50%);
+            padding: 10px;
+            transition: color 0.2s ease;
+            }
+
+            #lightbox-prev { left: 20px; }
+            #lightbox-next { right: 20px; }
+
+            #lightbox-prev:hover, #lightbox-next:hover {
+            color: #ff4d4d;
+            }
+
+        </style>
+    </head>
+
+    <body>
+        <div class="page">
+        <button class="floating-button floating2" onclick="scrollToTop()">↑</button>
+        <button class="floating-button floating1" onclick="scrollToBottom()">↓</button>
+        <h1 class="memories-title">September ~ ✿♥‿♥</h1>
+        <p class="subtitle">Little pieces of our story 💕📸✨</p>
+
+        <!-- Updated HTML with numbering on each photo per day. Only the modified Sections 1 & 2 are shown here for clarity. You can merge these back into your full file. -->
+        <h2 class="date-heading">1/9/2025</h2>
+        <div class="photo-grid" id="day35-grid"></div>
+
+        <h2 class="date-heading">2/9/2025</h2>
+        <div class="photo-grid" id="day36-grid"></div>
+
+        <h2 class="date-heading">3/9/2025</h2>
+        <div class="photo-grid" id="day37-grid"></div>
+
+        <h2 class="date-heading">4/9/2025</h2>
+        <div class="photo-grid" id="day38-grid"></div>
+
+        <h2 class="date-heading">5/9/2025</h2>
+        <div class="photo-grid" id="day39-grid"></div>
+
+        <h2 class="date-heading">6/9/2025</h2>
+        <div class="photo-grid" id="day40-grid"></div>
+
+        <h2 class="date-heading">7/9/2025</h2>
+        <div class="photo-grid" id="day41-grid"></div>
+
+        <h2 class="date-heading">9/9/2025</h2>
+        <div class="photo-grid" id="day42-grid"></div>
+
+        <h2 class="date-heading">10/9/2025</h2>
+        <div class="photo-grid" id="day43-grid"></div>
+
+        <h2 class="date-heading">11/9/2025</h2>
+        <div class="photo-grid" id="day44-grid"></div>
+
+        <h2 class="date-heading">12/9/2025</h2>
+        <div class="photo-grid" id="day45-grid"></div>
+
+        <h2 class="date-heading">13/9/2025</h2>
+        <div class="photo-grid" id="day46-grid"></div>
+
+        <h2 class="date-heading">14/9/2025</h2>
+        <div class="photo-grid" id="day47-grid"></div>
+
+        <h2 class="date-heading">15/9/2025</h2>
+        <div class="photo-grid" id="day48-grid"></div>
+
+        <h2 class="date-heading">16/9/2025</h2>
+        <div class="photo-grid" id="day49-grid"></div>
+
+        <h2 class="date-heading">17/9/2025</h2>
+        <div class="photo-grid" id="day50-grid"></div>
+
+        <h2 class="date-heading">18/9/2025</h2>
+        <div class="photo-grid" id="day51-grid"></div>
+
+        <h2 class="date-heading">19/9/2025</h2>
+        <div class="photo-grid" id="day52-grid"></div>
+
+        <h2 class="date-heading">20/9/2025</h2>
+        <div class="photo-grid" id="day53-grid"></div>
+
+        <h2 class="date-heading">21/9/2025</h2>
+        <div class="photo-grid" id="day54-grid"></div>
+
+        <h2 class="date-heading">22/9/2025</h2>
+        <div class="photo-grid" id="day55-grid"></div>
+
+        <h2 class="date-heading">23/9/2025</h2>
+        <div class="photo-grid" id="day56-grid"></div>
+
+        <h2 class="date-heading">24/9/2025</h2>
+        <div class="photo-grid" id="day57-grid"></div>
+
+        <h2 class="date-heading">25/9/2025</h2>
+        <div class="photo-grid" id="day58-grid"></div>
+
+        <h2 class="date-heading">26/9/2025</h2>
+        <div class="photo-grid" id="day59-grid"></div>
+
+        <h2 class="date-heading">28/9/2025</h2>
+        <div class="photo-grid" id="day60-grid"></div>
+
+        <h2 class="date-heading">30/9/2025</h2>
+        <div class="photo-grid" id="day61-grid"></div>
+
+        <!-- Lightbox Number Display -->
+        <span id="lightbox-index" style="position:fixed; top:10px; left:10px; color:white; background:rgba(0,0,0,0.6); padding:6px 10px; border-radius:6px; font-size:1rem; z-index:2000; display:none;">1</span>
+
+        <div id="lightbox">
+          <span id="lightbox-close">&times;</span>
+          <span id="lightbox-prev">&#10094;</span>
+          <img id="lightbox-img" src="" alt="enlarged photo">
+          <video id="lightbox-video" controls loop style="display:none; max-width:90%; max-height:90%;">
+            <source src="" type="video/mp4">
+          </video>
+          <span id="lightbox-next">&#10095;</span>
+        </div>
+
+        <button class="back-button" onclick="location.href='index.html'">Back</button>
+
+        <script>
+            // Arrays with media info for each day///////////
+            const day9_1 = [
+                {type: 'image', src: 'image/9.1/1.jpg'},
+                {type: 'image', src: 'image/9.1/2.PNG'},
+                {type: 'image', src: 'image/9.1/3.PNG'}
+            ]
+
+            const day9_2 = [
+                {type: 'video', src: 'image/9.2/1.mov', poster: 'image/9.2/1.jpg'},
+                {type: 'video', src: 'image/9.2/2.mov', poster: 'image/9.2/2.jpg'}
+            ]
+
+            const day9_3 = [
+                {type: 'image', src: 'image/9.3/1.PNG'},
+                {type: 'image', src: 'image/9.3/2.PNG'},
+                {type: 'image', src: 'image/9.3/3.PNG'}
+            ]
+
+            const day9_4 = [
+                {type: 'image', src: 'image/9.4/1.PNG'},
+                {type: 'image', src: 'image/9.4/2.PNG'},
+                {type: 'image', src: 'image/9.4/3.PNG'},
+                {type: 'image', src: 'image/9.4/4.PNG'},
+                {type: 'image', src: 'image/9.4/5.PNG'},
+                {type: 'image', src: 'image/9.4/6.PNG'},
+                {type: 'image', src: 'image/9.4/7.PNG'},
+                {type: 'image', src: 'image/9.4/8.PNG'},
+                {type: 'image', src: 'image/9.4/9.PNG'},
+                {type: 'image', src: 'image/9.4/10.PNG'},
+                {type: 'image', src: 'image/9.4/11.PNG'}
+            ]
+
+            const day9_5 = [
+                {type: 'image', src: 'image/9.5/1.PNG'},
+                {type: 'image', src: 'image/9.5/2.PNG'},
+                {type: 'image', src: 'image/9.5/3.PNG'},
+                {type: 'image', src: 'image/9.5/4.PNG'},
+            ]
+
+            const day9_6 = [
+                {type: 'image', src: 'image/9.6/1.PNG'},
+                {type: 'image', src: 'image/9.6/2.PNG'},
+                {type: 'image', src: 'image/9.6/3.JPEG'},
+                {type: 'image', src: 'image/9.6/4.JPEG'},
+                {type: 'video', src: 'image/9.6/5.MOV', poster: 'image/9.6/5.jpg'},
+                {type: 'image', src: 'image/9.6/6.JPEG'},
+                {type: 'image', src: 'image/9.6/7.JPEG'},
+                {type: 'image', src: 'image/9.6/8.PNG'},
+                {type: 'image', src: 'image/9.6/9.JPEG'},
+                {type: 'image', src: 'image/9.6/10.PNG'},
+                {type: 'image', src: 'image/9.6/11.JPEG'},
+                {type: 'image', src: 'image/9.6/12.JPEG'},
+                {type: 'image', src: 'image/9.6/13.JPEG'},
+                {type: 'image', src: 'image/9.6/14.JPEG'},
+                {type: 'image', src: 'image/9.6/15.JPEG'},
+                {type: 'image', src: 'image/9.6/16.JPEG'},
+                {type: 'image', src: 'image/9.6/17.JPEG'},
+                {type: 'image', src: 'image/9.6/18.JPEG'},
+                {type: 'image', src: 'image/9.6/19.JPEG'},
+                {type: 'image', src: 'image/9.6/20.JPEG'},
+                {type: 'image', src: 'image/9.6/21.PNG'},
+                {type: 'image', src: 'image/9.6/22.PNG'}
+            ]
+
+            const day9_7 = [
+                {type: 'image', src: 'image/9.7/1.PNG'},
+                {type: 'image', src: 'image/9.7/2.PNG'},
+                {type: 'image', src: 'image/9.7/3.PNG'}
+            ]
+            
+            const day9_9 = [
+                {type: 'image', src: 'image/9.8/1.PNG'},
+                {type: 'image', src: 'image/9.8/2.PNG'},
+                {type: 'image', src: 'image/9.8/3.PNG'},
+                {type: 'image', src: 'image/9.8/4.PNG'},
+                {type: 'image', src: 'image/9.8/5.PNG'}
+            ]
+
+            const day9_10 = [
+                {type: 'image', src: 'image/9.10/1.PNG'},
+                {type: 'image', src: 'image/9.10/2.PNG'},
+                {type: 'image', src: 'image/9.10/3.PNG'},
+                {type: 'image', src: 'image/9.10/4.PNG'},
+                {type: 'image', src: 'image/9.10/5.PNG'},
+                {type: 'image', src: 'image/9.10/6.PNG'},
+            ]
+
+            const day9_11 = [
+                {type: 'image', src: 'image/9.11/1.jpg'},
+                {type: 'video', src: 'image/9.11/2.mov', poster: 'image/9.11/2.jpg'},
+            ]
+
+            const day9_12 = [
+                {type: 'image', src: 'image/9.12/1.JPEG'},
+                {type: 'image', src: 'image/9.12/2.JPEG'},
+                {type: 'image', src: 'image/9.12/3.JPEG'},
+                {type: 'image', src: 'image/9.12/4.JPEG'},
+                {type: 'image', src: 'image/9.12/5.JPEG'},
+                {type: 'image', src: 'image/9.12/6.JPEG'},
+                {type: 'image', src: 'image/9.12/7.JPEG'},
+                {type: 'image', src: 'image/9.12/8.JPEG'},
+                {type: 'image', src: 'image/9.12/9.JPEG'},
+                {type: 'image', src: 'image/9.12/10.JPEG'},
+            ]
+
+            const day9_13 = [
+                {type: 'image', src: 'image/9.13/1.PNG'},
+                {type: 'image', src: 'image/9.13/2.JPEG'},
+                {type: 'image', src: 'image/9.13/3.jpg'},
+                {type: 'image', src: 'image/9.13/4.JPEG'},
+                {type: 'video', src: 'image/9.13/5.mov', poster: 'image/9.13/5.jpg'},
+                {type: 'video', src: 'image/9.13/6.MP4', poster: 'image/9.13/6.jpg'},
+                {type: 'image', src: 'image/9.13/7.JPEG'},
+                {type: 'image', src: 'image/9.13/8.JPEG'},
+                {type: 'image', src: 'image/9.13/9.JPEG'},
+                {type: 'image', src: 'image/9.13/10.JPEG'},
+                {type: 'image', src: 'image/9.13/11.JPEG'},
+                {type: 'image', src: 'image/9.13/12.JPEG'},
+                {type: 'image', src: 'image/9.13/13.JPEG'},
+            ]
+
+            const day9_14 = [
+                {type: 'image', src: 'image/9.14/1.JPEG'},
+                {type: 'image', src: 'image/9.14/2.JPEG'},
+                {type: 'image', src: 'image/9.14/3.jpg'},
+                {type: 'image', src: 'image/9.14/4.jpg'},
+                {type: 'image', src: 'image/9.14/5.PNG'},
+                {type: 'image', src: 'image/9.14/6.JPEG'},
+                {type: 'image', src: 'image/9.14/7.JPEG'},
+                {type: 'image', src: 'image/9.14/8.jpg'},
+            ]
+
+            const day9_15 = [
+                {type: 'image', src: 'image/9.15/1.JPEG'},
+                {type: 'image', src: 'image/9.15/2.JPEG'},
+                {type: 'image', src: 'image/9.15/3.JPEG'},
+                {type: 'image', src: 'image/9.15/4.JPEG'},
+                {type: 'image', src: 'image/9.15/5.JPEG'},
+                {type: 'image', src: 'image/9.15/6.JPEG'},
+                {type: 'image', src: 'image/9.15/7.JPEG'},
+                {type: 'video', src: 'image/9.15/8.mov', poster: 'image/9.15/8.jpg'},
+                {type: 'image', src: 'image/9.15/9.JPEG'},
+                {type: 'image', src: 'image/9.15/10.JPEG'},
+                {type: 'image', src: 'image/9.15/11.JPEG'},
+                {type: 'image', src: 'image/9.15/12.JPEG'},
+                {type: 'image', src: 'image/9.15/13.JPEG'},
+                {type: 'image', src: 'image/9.15/14.JPEG'},
+                {type: 'image', src: 'image/9.15/15.JPEG'},
+                {type: 'image', src: 'image/9.15/16.JPEG'}
+            ]
+
+            const day9_16 = [
+                {type: 'image', src: 'image/9.16/1.JPEG'},
+                {type: 'image', src: 'image/9.16/2.JPEG'},
+                {type: 'image', src: 'image/9.16/3.JPEG'},
+                {type: 'image', src: 'image/9.16/4.JPEG'},
+                {type: 'image', src: 'image/9.16/5.JPEG'},
+                {type: 'image', src: 'image/9.16/6.JPEG'},
+                {type: 'image', src: 'image/9.16/7.JPG'},
+                {type: 'image', src: 'image/9.16/8.JPEG'},
+            ]
+
+            const day9_17 = [
+                {type: 'image', src: 'image/9.17/1.jpg'},
+                {type: 'image', src: 'image/9.17/2.JPEG'},
+                {type: 'image', src: 'image/9.17/3.JPEG'},
+                {type: 'image', src: 'image/9.17/4.JPEG'},
+                {type: 'image', src: 'image/9.17/5.JPEG'},
+                {type: 'image', src: 'image/9.17/6.JPEG'},
+                {type: 'image', src: 'image/9.17/7.JPEG'},
+                {type: 'image', src: 'image/9.17/8.JPG'},
+                {type: 'image', src: 'image/9.17/9.JPEG'},
+                {type: 'image', src: 'image/9.17/10.JPEG'},
+                {type: 'image', src: 'image/9.17/11.JPEG'},
+                {type: 'image', src: 'image/9.17/12.JPEG'}
+            ]
+
+            const day9_18 = [
+                {type: 'image', src: 'image/9.18/1.JPEG'},
+                {type: 'image', src: 'image/9.18/2.JPEG'},
+                {type: 'image', src: 'image/9.18/3.JPEG'},
+                {type: 'image', src: 'image/9.18/4.JPEG'},
+                {type: 'image', src: 'image/9.18/5.JPEG'},
+                {type: 'image', src: 'image/9.18/6.JPG'},
+            ]
+
+            const day9_19 = [
+                {type: 'image', src: 'image/9.19/1.JPEG'},
+                {type: 'image', src: 'image/9.19/2.JPEG'},
+                {type: 'image', src: 'image/9.19/3.JPEG'},
+                {type: 'image', src: 'image/9.19/4.JPEG'},
+                {type: 'image', src: 'image/9.19/5.JPEG'},
+                {type: 'image', src: 'image/9.19/6.JPEG'},
+                {type: 'image', src: 'image/9.19/7.JPEG'},
+                {type: 'image', src: 'image/9.19/8.JPEG'},
+                {type: 'image', src: 'image/9.19/9.JPEG'},
+            ]
+
+            const day9_20 = [
+                {type: 'video', src: 'image/9.20/1.MP4', poster: 'image/9.20/1.jpg'},
+                {type: 'image', src: 'image/9.20/2.jpg'},
+                {type: 'video', src: 'image/9.120/3.MP4', poster: 'image/9.20/3.jpg'},
+            ]
+
+            const day9_21 = [
+                {type: 'image', src: 'image/9.21/1.JPEG'},
+                {type: 'image', src: 'image/9.21/2.JPEG'},
+                {type: 'image', src: 'image/9.21/3.JPEG'},
+                {type: 'image', src: 'image/9.21/4.JPEG'},
+                {type: 'image', src: 'image/9.21/5.JPEG'},
+                {type: 'image', src: 'image/9.21/6.JPEG'},
+                {type: 'image', src: 'image/9.21/7.JPEG'},
+                {type: 'image', src: 'image/9.21/8.JPEG'},
+                {type: 'image', src: 'image/9.21/9.JPEG'},
+                {type: 'image', src: 'image/9.21/10.JPEG'},
+                {type: 'image', src: 'image/9.21/11.JPEG'},
+                {type: 'image', src: 'image/9.21/12.JPEG'},
+                {type: 'image', src: 'image/9.21/13.JPEG'},
+                {type: 'image', src: 'image/9.21/14.JPEG'},
+                {type: 'image', src: 'image/9.21/15.JPEG'},
+                {type: 'image', src: 'image/9.21/16.JPEG'},
+                {type: 'image', src: 'image/9.21/17.JPEG'},
+                {type: 'image', src: 'image/9.21/18.jpg'},
+                {type: 'video', src: 'image/9.21/19.MOV', poster: 'image/9.21/19.jpg'},
+                {type: 'image', src: 'image/9.21/20.JPEG'},
+                {type: 'image', src: 'image/9.21/21.JPEG'},
+                {type: 'image', src: 'image/9.21/22.JPEG'},
+                {type: 'image', src: 'image/9.21/23.JPEG'},
+                {type: 'image', src: 'image/9.21/24.jpg'},
+                {type: 'image', src: 'image/9.21/25.JPEG'},
+                {type: 'image', src: 'image/9.21/26.JPEG'},
+                {type: 'image', src: 'image/9.21/27.JPEG'},
+                {type: 'image', src: 'image/9.21/28.JPEG'},
+                {type: 'image', src: 'image/9.21/29.JPEG'},
+                {type: 'video', src: 'image/9.21/30.mov', poster: 'image/9.21/30.jpg'}
+                
+            ]
+
+            const day9_22 = [
+                {type: 'image', src: 'image/9.22/1.JPEG'},
+                {type: 'image', src: 'image/9.22/2.JPEG'},
+                {type: 'image', src: 'image/9.22/3.JPEG'},
+                {type: 'image', src: 'image/9.22/4.JPEG'}
+            ]
+            
+            const day9_23 = [
+                {type: 'image', src: 'image/9.23/1.PNG'},
+                {type: 'video', src: 'image/9.23/2.mov', poster: 'image/9.23/2.jpg'}
+            ]
+
+            const day9_24 = [
+                {type: 'video', src: 'image/9.24/1.mp4', poster: 'image/9.24/1.jpg'},
+                {type: 'image', src: 'image/9.24/2.PNG'},
+                {type: 'image', src: 'image/9.24/3.JPEG'}
+            ]
+
+            const day9_25 = [
+                {type: 'image', src: 'image/9.25/1.JPEG'},
+                {type: 'image', src: 'image/9.25/2.JPEG'},
+                {type: 'image', src: 'image/9.25/3.jpg'},
+                {type: 'image', src: 'image/9.25/4.jpg'},
+                {type: 'image', src: 'image/9.25/5.jpg'}
+            ]
+
+            const day9_26 = [
+                {type: 'image', src: 'image/9.26/1.JPEG'},
+                {type: 'image', src: 'image/9.26/2.JPEG'}
+            ]
+
+            const day9_28 = [
+                {type: 'video', src: 'image/9.28/1.mov', poster: 'image/9.28/1.jpg'},
+                {type: 'image', src: 'image/9.28/2.PNG'},
+                {type: 'image', src: 'image/9.28/3.PNG'}
+            ]
+
+            const day9_30 = [
+                {type: 'image', src: 'image/9.30/1.PNG'},
+                {type: 'image', src: 'image/9.30/2.PNG'},
+                {type: 'image', src: 'image/9.30/3.PNG'},
+            ]
+            
+
+            // Populate all new days////////////////
+            populateGrid('day35-grid', day9_1);
+            populateGrid('day36-grid', day9_2);
+            populateGrid('day37-grid', day9_3);
+            populateGrid('day38-grid', day9_4);
+            populateGrid('day39-grid', day9_5);
+            populateGrid('day40-grid', day9_6);
+            populateGrid('day41-grid', day9_7);
+            populateGrid('day42-grid', day9_9);
+            populateGrid('day43-grid', day9_10);
+            populateGrid('day44-grid', day9_11);
+            populateGrid('day45-grid', day9_12);
+            populateGrid('day46-grid', day9_13);
+            populateGrid('day47-grid', day9_14);
+            populateGrid('day48-grid', day9_15);
+            populateGrid('day49-grid', day9_16);
+            populateGrid('day50-grid', day9_17);
+            populateGrid('day51-grid', day9_18);
+            populateGrid('day52-grid', day9_19);
+            populateGrid('day53-grid', day9_20);
+            populateGrid('day54-grid', day9_21);
+            populateGrid('day55-grid', day9_22);
+            populateGrid('day56-grid', day9_23);
+            populateGrid('day57-grid', day9_24);
+            populateGrid('day58-grid', day9_25);
+            populateGrid('day59-grid', day9_26);
+            populateGrid('day60-grid', day9_28);
+            populateGrid('day61-grid', day9_30);
+
+
+            // Function to populate grid dynamically
+            function populateGrid(containerId, mediaArray) {
+                const container = document.getElementById(containerId);
+                mediaArray.forEach((item, idx) => {
+                    const div = document.createElement('div');
+                    div.className = 'photo-item';
+
+                    const numberSpan = document.createElement('span');
+                    numberSpan.className = 'photo-number';
+                    numberSpan.textContent = idx + 1;
+
+                    div.appendChild(numberSpan);
+
+                    if (item.type === 'image') {
+                    const img = document.createElement('img');
+                    img.src = item.src;
+                    img.loading = 'lazy';
+                    div.appendChild(img);
+                    } else if (item.type === 'video') {
+                    const video = document.createElement('video');
+                    video.muted = true;
+                    video.playsInline = true;
+                    video.preload = 'metadata';
+                    if (item.poster) video.poster = item.poster;
+                    const source = document.createElement('source');
+                    source.src = item.src;
+                    source.type = 'video/mp4';
+                    video.appendChild(source);
+                    div.appendChild(video);
+                    }
+
+                    container.appendChild(div);
+                });
+            }
+
+            const items = document.querySelectorAll(".photo-grid img, .photo-grid video");
+            const lightbox = document.getElementById("lightbox");
+            const lightboxImg = document.getElementById("lightbox-img");
+            const lightboxVideo = document.getElementById("lightbox-video");
+            const lightboxClose = document.getElementById("lightbox-close");
+            const lightboxPrev = document.getElementById("lightbox-prev");
+            const lightboxNext = document.getElementById("lightbox-next");
+
+            let currentIndex = 0;
+
+            // Open lightbox
+            items.forEach((item, index) => {
+            item.addEventListener("click", () => {
+                currentIndex = index;
+                showItem(currentIndex);
+                lightbox.classList.add("active");
+            });
+            });
+
+            function showItem(index) {
+            if (index < 0) index = items.length - 1;
+            if (index >= items.length) index = 0;
+            currentIndex = index;
+
+            // Reset both
+            lightboxImg.style.display = "none";
+            lightboxVideo.style.display = "none";
+            lightboxVideo.pause();
+
+            updateLightboxNumber();
+            if (items[currentIndex].tagName === "IMG") {
+                // Show image
+                lightboxImg.src = items[currentIndex].src;
+                lightboxImg.style.display = "block";
+            } else {
+                // Show video
+                const src = items[currentIndex].querySelector("source").src;
+                lightboxVideo.querySelector("source").src = src;
+                lightboxVideo.load();
+                lightboxVideo.muted = false; // unmuted in lightbox
+                lightboxVideo.style.display = "block";
+                lightboxVideo.play();
+            }
+            }
+
+            // --- UPDATE TOP-LEFT NUMBER IN LIGHTBOX ---
+            function updateLightboxNumber() {
+            const currentItem = items[currentIndex];
+
+            // Find the .photo-item container
+            const parentItem = currentItem.closest(".photo-item");
+
+            if (!parentItem) return;
+
+            // Read the <span class="photo-number"> inside the item
+            const numberSpan = parentItem.querySelector(".photo-number");
+
+            if (numberSpan) {
+                const number = numberSpan.textContent.trim();
+                document.getElementById("lightbox-index").textContent = number;
+                document.getElementById("lightbox-index").style.display = "block";
+            }
+            }
+
+
+            // Close
+            lightboxClose.addEventListener("click", (e) => {
+            e.stopPropagation();
+            lightbox.classList.remove("active");
+            lightboxVideo.pause();
+            document.getElementById("lightbox-index").style.display="none";
+            });
+
+            // Background click closes
+            lightbox.addEventListener("click", (e) => {
+            if (e.target === lightbox) {
+                lightbox.classList.remove("active");
+                lightboxVideo.pause();
+                document.getElementById("lightbox-index").style.display = "none";
+            }
+            });
+
+            // Prev / Next arrows
+            lightboxPrev.addEventListener("click", () => showItem(currentIndex - 1));
+            lightboxNext.addEventListener("click", () => showItem(currentIndex + 1));
+
+            // Keyboard navigation
+            document.addEventListener("keydown", (e) => {
+            if (!lightbox.classList.contains("active")) return;
+            if (e.key === "ArrowLeft") showItem(currentIndex - 1);
+            if (e.key === "ArrowRight") showItem(currentIndex + 1);
+            if (e.key === "Escape") lightbox.classList.remove("active");
+            });
+
+            // Swipe support for mobile
+            let touchStartX = 0;
+
+            lightbox.addEventListener("touchstart", (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+            });
+
+            lightbox.addEventListener("touchend", (e) => {
+            let touchEndX = e.changedTouches[0].screenX;
+            if (touchEndX < touchStartX - 50) {
+                // swipe left → next
+                showItem(currentIndex + 1);
+            }
+            if (touchEndX > touchStartX + 50) {
+                // swipe right → prev
+                showItem(currentIndex - 1);
+            }
+            });
+
+            function scrollToTop(){
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+                }
+
+                function scrollToBottom(){
+                window.scrollTo({
+                    top:document.body.scrollHeight, 
+                    behavior: 'smooth'
+                });
+                }
+        </script>
+    </body>
+</html>
