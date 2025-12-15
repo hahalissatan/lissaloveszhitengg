@@ -1,0 +1,667 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@400;600&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+        <title>November</title>
+        <style>
+            body {
+            font-family: Arial, sans-serif;
+            background-color: #fff;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            z-index: 1;
+            font-family: 'Poppins', 'Nunito', 'Quicksand', 'Noto Sans SC', 'Microsoft YaHei', sans-serif;
+            }
+
+            #bg-blur, #bg-clear{
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+            }
+
+            #bg-clear{
+            display: none;
+            }
+
+            .content{
+            position: relative;
+            z-index: 1;
+            display: block;
+            transition: opacity 1.5s ease;
+            }
+
+            h1 {
+            margin: 20px 0;
+            /*color: #333;*/
+            }
+
+            .page {
+            padding: 30px;
+            }
+
+            .back-button, .show-button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            background: #ccc;
+            cursor: pointer;
+            font-size: 14px;
+            }
+
+            .back-button:active, .show-button:active{
+            transform: scale(0.95);
+            background-color: #aaa;
+            }
+
+            .floating-button{
+            position: fixed;
+            bottom: 15px;
+            right: 15px;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            border: 1px solid #333;
+            background: transparent;
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            z-index: 1000;
+            }
+
+            .floating1{
+            bottom: 15px;
+            right: 10px;
+            }
+
+            .floating2{
+            top: 25px;
+            right: 10px;
+            }
+
+            .floating-button:active{
+            transform: scale(0.95);
+            background-color: #aaa;
+            color: #fff;
+            }
+
+            .memories-title {
+            font-size: 1.3em; /* Small, like phone header */
+            color: #e60073;
+            margin: 15px 0 5px;
+            text-align: center;
+            }
+
+            .subtitle {
+            font-size: 0.8em;
+            color: #777;
+            margin-bottom: 20px;
+            text-align: center;
+            }
+
+            .date-heading {
+            font-size: 0.9em;
+            color: #333;
+            margin: 15px 0 8px 5%;
+            text-align: left;
+            }
+
+            .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); /* 3 per row like iPhone */
+            gap: 3px;
+            margin: 0 auto 20px;
+            max-width: 420px; /* like iPhone 12 Pro width */
+            }
+
+            .photo-grid img, .photo-grid video {
+            width: 100%;
+            aspect-ratio: 1 / 1; /* force square */
+            object-fit: cover;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: transform 0.2s;
+            display: block;
+            }
+
+            .photo-grid img:hover, .photo-grid video:hover {
+            transform: scale(1.03);
+            }
+
+            .photo-item{
+            position: relative;
+            }
+            .photo-number{
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            background: rgba(0,0,0,0.6);
+            color: #fff;
+            padding: 2px 6px;
+            font-size: 0.7em;
+            border-radius: 4px;
+            z-index: 10;
+            }
+
+            /* Lightbox */
+            #lightbox {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            }
+
+            #lightbox img {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 10px;
+            }
+
+            #lightbox.active {
+            display: flex;
+            }
+
+            #lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 25px;
+            font-size: 2rem;
+            font-weight: bold;
+            color: white;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+            }
+
+            #lightbox-close:hover {
+            transform: scale(1.2);
+            color: #ff4d4d;
+            }
+
+            #lightbox-prev, #lightbox-next {
+            position: absolute;
+            top: 50%;
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: white;
+            cursor: pointer;
+            user-select: none;
+            transform: translateY(-50%);
+            padding: 10px;
+            transition: color 0.2s ease;
+            }
+
+            #lightbox-prev { left: 20px; }
+            #lightbox-next { right: 20px; }
+
+            #lightbox-prev:hover, #lightbox-next:hover {
+            color: #ff4d4d;
+            }
+
+        </style>
+    </head>
+
+    <body>
+        <div class="page">
+        <button class="floating-button floating2" onclick="scrollToTop()">↑</button>
+        <button class="floating-button floating1" onclick="scrollToBottom()">↓</button>
+        <h1 class="memories-title">November₊˚ෆ⊹₊ ⋆</h1>
+        <p class="subtitle">Little pieces of our story 💕📸✨</p>
+
+        <!-- Updated HTML with numbering on each photo per day. Only the modified Sections 1 & 2 are shown here for clarity. You can merge these back into your full file. -->
+        <h2 class="date-heading">1/11/2025</h2>
+        <div class="photo-grid" id="day1-grid"></div>
+
+        <h2 class="date-heading">4/11/2025</h2>
+        <div class="photo-grid" id="day2-grid"></div>
+
+        <h2 class="date-heading">6/11/2025</h2>
+        <div class="photo-grid" id="day3-grid"></div>
+
+        <h2 class="date-heading">7/11/2025</h2>
+        <div class="photo-grid" id="day4-grid"></div>
+
+        <h2 class="date-heading">8/11/2025</h2>
+        <div class="photo-grid" id="day5-grid"></div>
+
+        <h2 class="date-heading">10/11/2025</h2>
+        <div class="photo-grid" id="day6-grid"></div>
+
+        <h2 class="date-heading">12/11/2025</h2>
+        <div class="photo-grid" id="day7-grid"></div>
+
+        <h2 class="date-heading">13/11/2025</h2>
+        <div class="photo-grid" id="day8-grid"></div>
+
+        <h2 class="date-heading">15/11/2025</h2>
+        <div class="photo-grid" id="day9-grid"></div>
+
+        <h2 class="date-heading">16/11/2025</h2>
+        <div class="photo-grid" id="day10-grid"></div>
+
+        <h2 class="date-heading">19/11/2025</h2>
+        <div class="photo-grid" id="day11-grid"></div>
+
+        <h2 class="date-heading">20/11/2025</h2>
+        <div class="photo-grid" id="day12-grid"></div>
+
+        <h2 class="date-heading">21/11/2025</h2>
+        <div class="photo-grid" id="day13-grid"></div>
+
+        <h2 class="date-heading">22/11/2025</h2>
+        <div class="photo-grid" id="day14-grid"></div>
+
+
+        <!-- Lightbox Number Display -->
+        <span id="lightbox-index" style="position:fixed; top:10px; left:10px; color:white; background:rgba(0,0,0,0.6); padding:6px 10px; border-radius:6px; font-size:1rem; z-index:2000; display:none;">1</span>
+
+        <div id="lightbox">
+          <span id="lightbox-close">&times;</span>
+          <span id="lightbox-prev">&#10094;</span>
+          <img id="lightbox-img" src="" alt="enlarged photo">
+          <video id="lightbox-video" controls loop style="display:none; max-width:90%; max-height:90%;">
+            <source src="" type="video/mp4">
+          </video>
+          <span id="lightbox-next">&#10095;</span>
+        </div>
+
+        <button class="back-button" onclick="location.href='index.html'">Back</button>
+
+        <script>
+            // Arrays with media info for each day///////////
+            const day11_1 = [
+                {type: 'image', src: 'image/11.1/1.jpg'},
+                {type: 'image', src: 'image/11.1/2.jpg'},
+                {type: 'image', src: 'image/11.1/3.PNG'},  
+                {type: 'image', src: 'image/11.1/4.jpg'}, 
+                {type: 'image', src: 'image/11.1/5.PNG'},  
+                {type: 'image', src: 'image/11.1/6.PNG'},  
+                {type: 'image', src: 'image/11.1/7.PNG'},  
+                {type: 'image', src: 'image/11.1/8.PNG'},  
+                {type: 'image', src: 'image/11.1/9.PNG'},  
+                {type: 'image', src: 'image/11.1/10.PNG'}, 
+                {type: 'image', src: 'image/11.1/11.PNG'}, 
+                {type: 'image', src: 'image/11.1/12.PNG'}, 
+                {type: 'image', src: 'image/11.1/13.PNG'}, 
+                {type: 'image', src: 'image/11.1/14.PNG'},  
+                {type: 'image', src: 'image/11.1/15.PNG'}, 
+                {type: 'image', src: 'image/11.1/16.PNG'}, 
+                {type: 'image', src: 'image/11.1/17.PNG'}, 
+                {type: 'image', src: 'image/11.1/18.PNG'}, 
+                {type: 'image', src: 'image/11.1/19.PNG'}, 
+                {type: 'image', src: 'image/11.1/20.PNG'}, 
+                {type: 'image', src: 'image/11.1/21.PNG'}, 
+                {type: 'image', src: 'image/11.1/22.PNG'}
+            ]
+
+            const day11_4 = [
+                {type: 'image', src: 'image/11.4/1.PNG'}, 
+                {type: 'image', src: 'image/11.4/2.PNG'}, 
+                {type: 'image', src: 'image/11.4/3.JPEG'}, 
+                {type: 'image', src: 'image/11.4/4.JPEG'}, 
+                {type: 'image', src: 'image/11.4/5.JPEG'}, 
+                {type: 'image', src: 'image/11.4/6.JPEG'}, 
+                {type: 'image', src: 'image/11.4/7.JPEG'}, 
+                {type: 'image', src: 'image/11.4/8.JPEG'}, 
+                {type: 'image', src: 'image/11.4/9.JPEG'}, 
+            ]
+
+            const day11_6 = [
+                {type: 'image', src: 'image/11.6/1.jpg'},
+                {type: 'image', src: 'image/11.6/2.jpg'},
+                {type: 'image', src: 'image/11.6/3.PNG'}, 
+                {type: 'image', src: 'image/11.6/4.PNG'}, 
+                {type: 'image', src: 'image/11.6/5.PNG'}, 
+                {type: 'image', src: 'image/11.6/6.PNG'}, 
+                {type: 'image', src: 'image/11.6/7.PNG'}, 
+                {type: 'image', src: 'image/11.6/8.PNG'}, 
+                {type: 'image', src: 'image/11.6/9.PNG'}, 
+                {type: 'image', src: 'image/11.6/10.PNG'}, 
+                {type: 'image', src: 'image/11.6/11.PNG'}, 
+            ]
+            
+            const day11_7 = [
+                {type: 'image', src: 'image/11.7/1.jpg'},
+                {type: 'image', src: 'image/11.7/2.JPEG'}, 
+                {type: 'image', src: 'image/11.7/3.JPEG'}, 
+                {type: 'image', src: 'image/11.7/4.JPEG'}, 
+                {type: 'image', src: 'image/11.7/5.JPEG'}, 
+                {type: 'image', src: 'image/11.7/6.JPG'}, 
+                {type: 'image', src: 'image/11.7/7.JPEG'}, 
+                {type: 'image', src: 'image/11.7/8.JPEG'}, 
+                {type: 'image', src: 'image/11.7/9.jpg'}, 
+                {type: 'image', src: 'image/11.7/10.JPG'},  
+                {type: 'image', src: 'image/11.7/11.JPG'}, 
+                {type: 'video', src: 'image/11.7/12.mov', poster: 'image/11.7/12.jpg'},
+                {type: 'image', src: 'image/11.7/13.JPEG'}, 
+                {type: 'image', src: 'image/11.7/14.JPG'}, 
+                {type: 'image', src: 'image/11.7/15.JPG'}, 
+                {type: 'image', src: 'image/11.7/16.JPEG'}, 
+                {type: 'image', src: 'image/11.7/17.JPEG'}, 
+                {type: 'image', src: 'image/11.7/18.JPEG'}, 
+                {type: 'video', src: 'image/11.7/19.mov', poster: 'image/11.7/19.jpg'},
+                {type: 'image', src: 'image/11.7/20.JPEG'}, 
+                {type: 'image', src: 'image/11.7/21.JPEG'}, 
+                {type: 'image', src: 'image/11.7/22.JPEG'}, 
+                {type: 'image', src: 'image/11.7/23.JPG'}, 
+                {type: 'image', src: 'image/11.7/24.JPEG'}, 
+                {type: 'image', src: 'image/11.7/25.jpg'}, 
+                {type: 'image', src: 'image/11.7/26.JPEG'}, 
+                {type: 'image', src: 'image/11.7/27.JPEG'}, 
+                {type: 'image', src: 'image/11.7/28.JPEG'}, 
+            ]
+
+            const day11_8 = [
+                {type: 'image', src: 'image/11.8/1.JPEG'}, 
+                {type: 'image', src: 'image/11.8/2.JPEG'}, 
+                {type: 'image', src: 'image/11.8/3.jpg'}, 
+                {type: 'image', src: 'image/11.8/4.jpg'}, 
+                {type: 'image', src: 'image/11.8/5.jpg'}, 
+                {type: 'image', src: 'image/11.8/6.jpg'}, 
+                {type: 'image', src: 'image/11.8/7.jpg'}, 
+                {type: 'image', src: 'image/11.8/8.jpg'}, 
+                {type: 'image', src: 'image/11.8/9.jpg'}, 
+                {type: 'image', src: 'image/11.8/10.jpg'}, 
+                {type: 'image', src: 'image/11.8/11.PNG'}, 
+                {type: 'image', src: 'image/11.8/12.JPEG'}, 
+            ]
+
+            const day11_10 = [
+                {type: 'image', src: 'image/11.10/1.PNG'}, 
+                {type: 'image', src: 'image/11.10/2.PNG'}, 
+                {type: 'image', src: 'image/11.10/3.PNG'}, 
+                {type: 'image', src: 'image/11.10/4.PNG'}, 
+                {type: 'image', src: 'image/11.10/5.PNG'}, 
+            ]
+
+            const day11_12 = [
+                {type: 'image', src: 'image/11.12/1.jpeg'}, 
+                {type: 'video', src: 'image/11.12/2.MOV', poster: 'image/11.12/2.jpg'},
+                {type: 'image', src: 'image/11.12/3.jpeg'}, 
+                {type: 'image', src: 'image/11.12/4.jpeg'}, 
+                {type: 'image', src: 'image/11.12/5.jpeg'}, 
+                {type: 'image', src: 'image/11.12/6.jpeg'}, 
+                {type: 'image', src: 'image/11.12/7.jpeg'}, 
+                {type: 'image', src: 'image/11.12/8.jpeg'}, 
+                {type: 'image', src: 'image/11.12/9.jpeg'}, 
+                {type: 'image', src: 'image/11.12/10.jpeg'}, 
+                {type: 'image', src: 'image/11.12/11.PNG'}, 
+                {type: 'image', src: 'image/11.12/12.PNG'}, 
+                {type: 'image', src: 'image/11.12/13.PNG'}, 
+                {type: 'image', src: 'image/11.12/14.PNG'}, 
+                {type: 'image', src: 'image/11.12/15.PNG'}
+            ]
+
+            const day11_13 = [
+                {type: 'image', src: 'image/11.13/1.jpg'}, 
+                {type: 'image', src: 'image/11.13/2.PNG'}, 
+                {type: 'image', src: 'image/11.13/3.PNG'}, 
+                {type: 'image', src: 'image/11.13/4.PNG'}, 
+                {type: 'image', src: 'image/11.13/5.PNG'}
+            ]
+
+            const day11_15 = [
+                {type: 'video', src: 'image/11.15/1.mov', poster: 'image/11.15/1.jpg'},
+            ]
+
+            const day11_16 = [
+                {type: 'image', src: 'image/11.16/1.JPEG'}, 
+                {type: 'image', src: 'image/11.16/2.PNG'}, 
+                {type: 'image', src: 'image/11.16/3.JPEG'}, 
+                {type: 'image', src: 'image/11.16/4.PNG'}
+            ]
+
+            const day11_19 = [
+                {type: 'image', src: 'image/11.19/1.PNG'},
+                {type: 'video', src: 'image/11.19/2.mov', poster: 'image/11.19/2.jpg'}, 
+                {type: 'image', src: 'image/11.19/3.PNG'}, 
+                {type: 'image', src: 'image/11.19/4.PNG'}, 
+                {type: 'image', src: 'image/11.19/5.PNG'}, 
+                {type: 'image', src: 'image/11.19/6.PNG'}, 
+                {type: 'image', src: 'image/11.19/7.PNG'}, 
+            ]
+
+            const day11_20 = [
+                {type: 'image', src: 'image/11.20/1.jpg'}, 
+                {type: 'image', src: 'image/11.20/2.jpg'}
+            ]
+
+            const day11_21 = [
+                {type: 'image', src: 'image/11.21/1.jpg'}, 
+                {type: 'image', src: 'image/11.21/2.jpg'}, 
+                {type: 'image', src: 'image/11.21/3.PNG'}, 
+                {type: 'image', src: 'image/11.21/4.PNG'}, 
+                {type: 'image', src: 'image/11.21/5.PNG'}, 
+                {type: 'image', src: 'image/11.21/6.PNG'}, 
+                {type: 'image', src: 'image/11.21/7.PNG'}
+            ]
+
+            const day11_22 = [
+                {type: 'image', src: 'image/11.22/1.PNG'},
+                {type: 'image', src: 'image/11.22/1.PNG'},
+                {type: 'image', src: 'image/11.22/1.PNG'},
+                {type: 'image', src: 'image/11.22/1.PNG'},
+                {type: 'video', src: 'image/11.22/5.MP4', poster: 'image/11.22/5.jpg'},
+                {type: 'image', src: 'image/11.22/6.jpg'},
+                {type: 'image', src: 'image/11.22/7.PNG'},
+                {type: 'image', src: 'image/11.22/8.PNG'},
+                {type: 'image', src: 'image/11.22/9.PNG'},
+                {type: 'image', src: 'image/11.22/10.PNG'},
+                {type: 'image', src: 'image/11.22/11.PNG'},
+                {type: 'image', src: 'image/11.22/12.PNG'},
+                {type: 'image', src: 'image/11.22/13.PNG'},
+                {type: 'image', src: 'image/11.22/14.PNG'},
+                {type: 'image', src: 'image/11.22/15.PNG'},
+                {type: 'image', src: 'image/11.22/16.PNG'},
+                {type: 'image', src: 'image/11.22/17.PNG'},
+                {type: 'image', src: 'image/11.22/18.jpg'},
+                {type: 'image', src: 'image/11.22/19.jpg'},
+                {type: 'image', src: 'image/11.22/20.jpg'},
+                {type: 'image', src: 'image/11.22/21.jpg'},
+                {type: 'image', src: 'image/11.22/22.jpg'},
+                {type: 'image', src: 'image/11.22/23.jpg'},
+                {type: 'image', src: 'image/11.22/24.jpg'},
+                {type: 'image', src: 'image/11.22/25.PNG'},
+                {type: 'image', src: 'image/11.22/26.PNG'},
+                {type: 'image', src: 'image/11.22/27.PNG'},
+                {type: 'image', src: 'image/11.22/28.PNG'},
+                {type: 'image', src: 'image/11.22/29.PNG'},
+                {type: 'image', src: 'image/11.22/30.PNG'},
+                {type: 'image', src: 'image/11.22/31.PNG'},
+                {type: 'image', src: 'image/11.22/32.PNG'}
+                
+            ]
+
+            // Populate all new days////////////////
+            populateGrid('day1-grid', day11_1);
+            populateGrid('day2-grid', day11_4);
+            populateGrid('day3-grid', day11_6);
+            populateGrid('day4-grid', day11_7);
+            populateGrid('day5-grid', day11_8);
+            populateGrid('day6-grid', day11_10);
+            populateGrid('day7-grid', day11_12);
+            populateGrid('day8-grid', day11_13);
+            populateGrid('day9-grid', day11_15);
+            populateGrid('day10-grid', day11_16);
+            populateGrid('day11-grid', day11_19);
+            populateGrid('day12-grid', day11_20);
+            populateGrid('day13-grid', day11_21);
+            populateGrid('day14-grid', day11_22);
+            
+
+
+            // Function to populate grid dynamically
+            function populateGrid(containerId, mediaArray) {
+                const container = document.getElementById(containerId);
+                mediaArray.forEach((item, idx) => {
+                    const div = document.createElement('div');
+                    div.className = 'photo-item';
+
+                    const numberSpan = document.createElement('span');
+                    numberSpan.className = 'photo-number';
+                    numberSpan.textContent = idx + 1;
+
+                    div.appendChild(numberSpan);
+
+                    if (item.type === 'image') {
+                    const img = document.createElement('img');
+                    img.src = item.src;
+                    img.loading = 'lazy';
+                    div.appendChild(img);
+                    } else if (item.type === 'video') {
+                    const video = document.createElement('video');
+                    video.muted = true;
+                    video.playsInline = true;
+                    video.preload = 'metadata';
+                    if (item.poster) video.poster = item.poster;
+                    const source = document.createElement('source');
+                    source.src = item.src;
+                    source.type = 'video/mp4';
+                    video.appendChild(source);
+                    div.appendChild(video);
+                    }
+
+                    container.appendChild(div);
+                });
+            }
+
+            const items = document.querySelectorAll(".photo-grid img, .photo-grid video");
+            const lightbox = document.getElementById("lightbox");
+            const lightboxImg = document.getElementById("lightbox-img");
+            const lightboxVideo = document.getElementById("lightbox-video");
+            const lightboxClose = document.getElementById("lightbox-close");
+            const lightboxPrev = document.getElementById("lightbox-prev");
+            const lightboxNext = document.getElementById("lightbox-next");
+
+            let currentIndex = 0;
+
+            // Open lightbox
+            items.forEach((item, index) => {
+            item.addEventListener("click", () => {
+                currentIndex = index;
+                showItem(currentIndex);
+                lightbox.classList.add("active");
+            });
+            });
+
+            function showItem(index) {
+            if (index < 0) index = items.length - 1;
+            if (index >= items.length) index = 0;
+            currentIndex = index;
+
+            // Reset both
+            lightboxImg.style.display = "none";
+            lightboxVideo.style.display = "none";
+            lightboxVideo.pause();
+
+            updateLightboxNumber();
+            if (items[currentIndex].tagName === "IMG") {
+                // Show image
+                lightboxImg.src = items[currentIndex].src;
+                lightboxImg.style.display = "block";
+            } else {
+                // Show video
+                const src = items[currentIndex].querySelector("source").src;
+                lightboxVideo.querySelector("source").src = src;
+                lightboxVideo.load();
+                lightboxVideo.muted = false; // unmuted in lightbox
+                lightboxVideo.style.display = "block";
+                lightboxVideo.play();
+            }
+            }
+
+            // --- UPDATE TOP-LEFT NUMBER IN LIGHTBOX ---
+            function updateLightboxNumber() {
+            const currentItem = items[currentIndex];
+
+            // Find the .photo-item container
+            const parentItem = currentItem.closest(".photo-item");
+
+            if (!parentItem) return;
+
+            // Read the <span class="photo-number"> inside the item
+            const numberSpan = parentItem.querySelector(".photo-number");
+
+            if (numberSpan) {
+                const number = numberSpan.textContent.trim();
+                document.getElementById("lightbox-index").textContent = number;
+                document.getElementById("lightbox-index").style.display = "block";
+            }
+            }
+
+
+            // Close
+            lightboxClose.addEventListener("click", (e) => {
+            e.stopPropagation();
+            lightbox.classList.remove("active");
+            lightboxVideo.pause();
+            document.getElementById("lightbox-index").style.display="none";
+            });
+
+            // Background click closes
+            lightbox.addEventListener("click", (e) => {
+            if (e.target === lightbox) {
+                lightbox.classList.remove("active");
+                lightboxVideo.pause();
+                document.getElementById("lightbox-index").style.display = "none";
+            }
+            });
+
+            // Prev / Next arrows
+            lightboxPrev.addEventListener("click", () => showItem(currentIndex - 1));
+            lightboxNext.addEventListener("click", () => showItem(currentIndex + 1));
+
+            // Keyboard navigation
+            document.addEventListener("keydown", (e) => {
+            if (!lightbox.classList.contains("active")) return;
+            if (e.key === "ArrowLeft") showItem(currentIndex - 1);
+            if (e.key === "ArrowRight") showItem(currentIndex + 1);
+            if (e.key === "Escape") lightbox.classList.remove("active");
+            });
+
+            // Swipe support for mobile
+            let touchStartX = 0;
+
+            lightbox.addEventListener("touchstart", (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+            });
+
+            lightbox.addEventListener("touchend", (e) => {
+            let touchEndX = e.changedTouches[0].screenX;
+            if (touchEndX < touchStartX - 50) {
+                // swipe left → next
+                showItem(currentIndex + 1);
+            }
+            if (touchEndX > touchStartX + 50) {
+                // swipe right → prev
+                showItem(currentIndex - 1);
+            }
+            });
+
+            function scrollToTop(){
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+                }
+
+                function scrollToBottom(){
+                window.scrollTo({
+                    top:document.body.scrollHeight, 
+                    behavior: 'smooth'
+                });
+                }
+        </script>
+    </body>
+</html>
