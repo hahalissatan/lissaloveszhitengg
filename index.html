@@ -1,737 +1,741 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@400;600&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-  <title>Main Page ~</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #fff;
-      margin: 0;
-      padding: 0;
-      text-align: center;
-      z-index: 1;
-      font-family: 'Poppins', 'Nunito', 'Quicksand', 'Noto Sans SC', 'Microsoft YaHei', sans-serif;
-    }
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@400;600&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;800;1000&display=swap" rel="stylesheet">
+    <title>Main Page ~</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #fff;
+        margin: 0;
+        padding: 0;
+        text-align: center;
+        z-index: 1;
+        font-family: 'Poppins', 'Nunito', 'Quicksand', 'Noto Sans SC', 'Microsoft YaHei', sans-serif;
+      }
 
-    #bg-blur, #bg-clear{
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      z-index: -1;
-    }
+      #bg-blur, #bg-clear{
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        z-index: -1;
+      }
 
-    #bg-clear{
-      display: none;
-    }
+      #bg-clear{
+        display: none;
+      }
 
-    .content{
-      position: relative;
-      z-index: 1;
-      display: block;
-      transition: opacity 1.5s ease;
-    }
+      .content{
+        position: relative;
+        z-index: 1;
+        display: block;
+        transition: opacity 1.5s ease;
+      }
 
-    h1 {
-      margin: 20px 0;
-      /*color: #333;*/
-    }
+      h1 {
+        margin: 20px 0;
+        font-family: 'Baloo 2', cursive;
+        font-weight: 800;
+        font-size: 2rem;
+        color: white;
+      }
 
-    .button-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 15px;
-      max-width: 250px;
-      margin: 0 auto;
-      padding: 20px;
-    }
+      .button-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 15px;
+        max-width: 250px;
+        margin: 0 auto;
+        padding: 20px;
+      }
 
-    .button-grid button {
-      padding: 15px;
-      border: none;
-      border-radius: 12px;
-      font-size: 16px;
-      cursor: pointer;
-      font-weight: bold;
-      transition: transform 0.2s ease, opacity 0.2s ease;
-      font-family: 'Poppins', 'Nunito', 'Quicksand', 'Noto Sans SC', 'Microsoft YaHei', sans-serif;
-    }
+      .button-grid button {
+        padding: 15px;
+        border: none;
+        border-radius: 12px;
+        font-size: 16px;
+        cursor: pointer;
+        font-weight: bold;
+        transition: transform 0.2s ease, opacity 0.2s ease;
+        font-family: 'Poppins', 'Nunito', 'Quicksand', 'Noto Sans SC', 'Microsoft YaHei', sans-serif;
+      }
 
-    .button-grid button:active {
-      transform: scale(0.95);
-      opacity: 0.8;
-    }
+      .button-grid button:active {
+        transform: scale(0.95);
+        opacity: 0.8;
+      }
 
-    .page {
-      display: none;
-      padding: 30px;
-    }
+      .page {
+        display: none;
+        padding: 30px;
+      }
 
-    .back-button, .show-button {
-      margin-top: 20px;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 8px;
-      background: #ccc;
-      cursor: pointer;
-      font-size: 14px;
-    }
+      .back-button, .show-button {
+        margin-top: 20px;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 8px;
+        background: #ccc;
+        cursor: pointer;
+        font-size: 14px;
+      }
 
-    .back-button:active, .show-button:active{
-      transform: scale(0.95);
-      background-color: #aaa;
-    }
+      .back-button:active, .show-button:active{
+        transform: scale(0.95);
+        background-color: #aaa;
+      }
 
-    .floating-button{
-      position: fixed;
-      bottom: 15px;
-      right: 15px;
-      width: 38px;
-      height: 38px;
-      border-radius: 50%;
-      border: 1px solid #333;
-      background: transparent;
-      font-size: 20px;
-      font-weight: bold;
-      cursor: pointer;
-      z-index: 1000;
-    }
+      .floating-button{
+        position: fixed;
+        bottom: 15px;
+        right: 15px;
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        border: 1px solid #333;
+        background: transparent;
+        font-size: 20px;
+        font-weight: bold;
+        cursor: pointer;
+        z-index: 1000;
+      }
 
-    .floating1{
-      bottom: 15px;
-      right: 10px;
-    }
+      .floating1{
+        bottom: 15px;
+        right: 10px;
+      }
 
-    .floating2{
-      top: 25px;
-      right: 10px;
-    }
+      .floating2{
+        top: 25px;
+        right: 10px;
+      }
 
-    .floating-button:active{
-      transform: scale(0.95);
-      background-color: #aaa;
-      color: #fff;
-    }
+      .floating-button:active{
+        transform: scale(0.95);
+        background-color: #aaa;
+        color: #fff;
+      }
 
-    .heart-checkbox{
-      font-size: 2.5rem;
-      bottom: 10px;
-      display: inline-block;      
-      justify-content: center;
-    }
+      .heart-checkbox{
+        font-size: 2.5rem;
+        bottom: 10px;
+        display: inline-block;      
+        justify-content: center;
+      }
 
-    .heart-checkbox input{
-      display: none;
-    }
+      .heart-checkbox input{
+        display: none;
+      }
 
-    .heart::before{
-      content: "🤍";
-      transition: transform 0.3s ease;
-    }
+      .heart::before{
+        content: "🤍";
+        transition: transform 0.3s ease;
+      }
 
-    .heart-checkbox input:checked + .heart::before{
-      content: "❤️";
-    }
+      .heart-checkbox input:checked + .heart::before{
+        content: "❤️";
+      }
 
-    body.clear-bg::before{
-      backdrop-filter: none;
-      background: transparent;
-    }
-    
-    /* NEW STYLES FOR ALIGNMENT */
-    .love-container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      max-width: 600px;
-      margin: 0 auto;
-    }
-    
-    .love-row {
-      display: flex;
-      width: 100%;
-      margin-bottom: 5px;
-    }
-    
-    .number-col {
-      width: 40px;
-      text-align: right;
-      padding-right: 10px;
-      flex-shrink: 0;
-      display: none; /* Hidden by default */
-    }
-    
-    .love-col {
-      flex-grow: 1;
-      text-align: center;
-    }
-    
-    .show-numbers {
-      margin: 20px 0;
-      text-align: center;
-      font-size: 0.9em;
-      color: #444;
-    }
-
-    #page2{
-      height: 100vh;
-      background: url("image/lofi.jpg") center center / cover no-repeat;
-      color: #f0f0f0;
-    }
-
-    .voice-message {
-      padding-top: 200px;
-      padding-bottom: 200px;
-      display: flex;
-      justify-content: center;
-      margin-top: 40px;
-    }
-
-    .voice-bubble {
-      display: flex;
-      align-items: center;
-      background: rgba(45, 40, 70, 0.9); /* deep purple-gray bubble like Instagram Lofi */
-      border-radius: 25px;
-      padding: 10px 15px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
-      width: 80%;
-      max-width: 400px;
-      gap: 10px;
-      color: #f5f3ff; /* light text inside */
-      backdrop-filter: blur(8px); /* soft glow */
-    }
-
-    .play-btn {
-      border: none;
-      background: none;
-      font-size: 1.5em;
-      cursor: pointer;
-      transition: transform 0.2s ease;
-    }
-
-    .play-btn:active {
-      transform: scale(0.9);
-    }
-
-    .progress-bar {
-      flex-grow: 1;
-      height: 5px;
-      background: #eee;
-      border-radius: 5px;
-      overflow: hidden;
-      position: relative;
-    }
-
-    .progress {
-      width: 0%;
-      height: 100%;
-      background: linear-gradient(90deg, #00b09b, #96c93d);
-      transition: width 0.1s linear;
-    }
-
-    .timestamp {
-      font-size: 0.9em;
-      color: #555;
-      min-width: 40px;
-      text-align: right;
-    }
-
-
-    .memories-title {
-      font-size: 1.2em; /* Small, like phone header */
-      color: #e60073;
-      margin: 15px 0 5px;
-      text-align: center;
-    }
-
-    .subtitle {
-      font-size: 0.8em;
-      color: #777;
-      margin-bottom: 20px;
-      text-align: center;
-    }
-
-    .date-heading {
-      font-size: 0.9em;
-      color: #333;
-      margin: 15px 0 8px 5%;
-      text-align: left;
-    }
-
-    .photo-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr); /* 3 per row like iPhone */
-      gap: 3px;
-      margin: 0 auto 20px;
-      max-width: 420px; /* like iPhone 12 Pro width */
-    }
-
-    .photo-grid img, .photo-grid video {
-      width: 100%;
-      aspect-ratio: 1 / 1; /* force square */
-      object-fit: cover;
-      border-radius: 3px;
-      cursor: pointer;
-      transition: transform 0.2s;
-      display: block;
-    }
-
-    .photo-grid img:hover, .photo-grid video:hover {
-      transform: scale(1.03);
-    }
-
-    .photo-item{
-      position: relative;
-    }
-    .photo-number{
-      position: absolute;
-      top: 5px;
-      left: 5px;
-      background: rgba(0,0,0,0.6);
-      color: #fff;
-      padding: 2px 6px;
-      font-size: 0.7em;
-      border-radius: 4px;
-      z-index: 10;
-    }
-
-    /* Lightbox */
-    #lightbox {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0,0,0,0.9);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 1000;
-    }
-
-    #lightbox img {
-      max-width: 90%;
-      max-height: 90%;
-      border-radius: 10px;
-    }
-
-    #lightbox.active {
-      display: flex;
-    }
-
-    #lightbox-close {
-      position: absolute;
-      top: 20px;
-      right: 25px;
-      font-size: 2rem;
-      font-weight: bold;
-      color: white;
-      cursor: pointer;
-      transition: transform 0.2s ease;
-    }
-
-    #lightbox-close:hover {
-      transform: scale(1.2);
-      color: #ff4d4d;
-    }
-
-    #lightbox-prev, #lightbox-next {
-      position: absolute;
-      top: 50%;
-      font-size: 2.5rem;
-      font-weight: bold;
-      color: white;
-      cursor: pointer;
-      user-select: none;
-      transform: translateY(-50%);
-      padding: 10px;
-      transition: color 0.2s ease;
-    }
-
-    #lightbox-prev { left: 20px; }
-    #lightbox-next { right: 20px; }
-
-    #lightbox-prev:hover, #lightbox-next:hover {
-      color: #ff4d4d;
-    }
-
-  </style>
-</head>
-<body>
-  <img id="bg-blur" src="image/lissa-blur.jpg">
-  <img id="bg-clear" src="image/lissa.jpg">
-  <div id="mainWrapper">
-    <div class="content" id="mainContent">
-      <h1 style="margin-top:  50px; color: white;font-family: 'Ma Shan Zheng', 'Noto Sans SC', 'Microsoft YaHei', sans-serif;">✨Main Page✨</h1>
-      <div class="button-grid">
-        <button onclick = "location.href='page1.html'" style="background:#FFCCE6; color:#000;">Page 1</button>
-        <button onclick = "location.href='page2.html'" style="background:#FFDFBA; color:#000;">Page 2</button>
-        <button onclick = "location.href='July.html'" style="background:#CCE0FF; color:#000;">July</button>
-        <button onclick = "location.href='August.html'" style="background:#FFF5CC; color:#000;">August</button>
-        <button onclick = "location.href='September.html'" style="background:#FFE6A7; color:#000;">September</button>
-        <button onclick = "location.href='October.html'" style="background:#FFD4A3; color:#000;">October</button>
-        <button onclick = "location.href='November.html'" style="background:#E3CCFF; color:#000;">November</button>
-      </div>
-    </div>
-
-    <div id="mainContentPlaceholder" style="display: none;"></div>
-
-    <label class="heart-checkbox" style="margin-bottom: 50px;">
-        <input type="checkbox" id="loveCheck">
-        <span class="heart"></span>
-    </label>
-
-    <button class="floating-button floating1" onclick="scrollToBottom()">↓</button>
-
-    <div id="pages">
-      <div id="page2" class="page" style="display:none;">
-        <h1 style="font-family: 'Poppins', 'Quicksand', 'Nunito', sans-serif; font-weight: 600; letter-spacing: 0.5px;">哭包👩🏿💕💕</h1>
-
-        <div class="voice-message">
-          <div class="voice-bubble">
-            <button id="playButton" class="play-btn">▶️</button>
-            <div class="progress-bar">
-              <div class="progress"></div>
-            </div>
-            <span class="timestamp" id="audioTime">0:00</span>
-          </div>
-        </div>
-
-        <audio id="voiceAudio" src="image/ilovezhitengsound.m4a"></audio>
-
-        <button class="back-button" onclick="goBack()">Back</button>
-      </div>
+      body.clear-bg::before{
+        backdrop-filter: none;
+        background: transparent;
+      }
       
-      <script>
-        // Update lightbox items
-        updateItemsList();
-        // Function to populate grid dynamically
-        function populateGrid(containerId, mediaArray) {
-          const container = document.getElementById(containerId);
-          mediaArray.forEach((item, idx) => {
-            const div = document.createElement('div');
-            div.className = 'photo-item';
+      /* NEW STYLES FOR ALIGNMENT */
+      .love-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        max-width: 600px;
+        margin: 0 auto;
+      }
+      
+      .love-row {
+        display: flex;
+        width: 100%;
+        margin-bottom: 5px;
+      }
+      
+      .number-col {
+        width: 40px;
+        text-align: right;
+        padding-right: 10px;
+        flex-shrink: 0;
+        display: none; /* Hidden by default */
+      }
+      
+      .love-col {
+        flex-grow: 1;
+        text-align: center;
+      }
+      
+      .show-numbers {
+        margin: 20px 0;
+        text-align: center;
+        font-size: 0.9em;
+        color: #444;
+      }
 
-            const numberSpan = document.createElement('span');
-            numberSpan.className = 'photo-number';
-            numberSpan.textContent = idx + 1;
+      #page2{
+        height: 100vh;
+        background: url("image/lofi.jpg") center center / cover no-repeat;
+        color: #f0f0f0;
+      }
 
-            div.appendChild(numberSpan);
+      .voice-message {
+        padding-top: 200px;
+        padding-bottom: 200px;
+        display: flex;
+        justify-content: center;
+        margin-top: 40px;
+      }
 
-            if (item.type === 'image') {
-              const img = document.createElement('img');
-              img.src = item.src;
-              img.loading = 'lazy';
-              div.appendChild(img);
-            } else if (item.type === 'video') {
-              const video = document.createElement('video');
-              video.muted = true;
-              video.playsInline = true;
-              video.preload = 'metadata';
-              if (item.poster) video.poster = item.poster;
-              const source = document.createElement('source');
-              source.src = item.src;
-              source.type = 'video/mp4';
-              video.appendChild(source);
-              div.appendChild(video);
-            }
+      .voice-bubble {
+        display: flex;
+        align-items: center;
+        background: rgba(45, 40, 70, 0.9); /* deep purple-gray bubble like Instagram Lofi */
+        border-radius: 25px;
+        padding: 10px 15px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+        width: 80%;
+        max-width: 400px;
+        gap: 10px;
+        color: #f5f3ff; /* light text inside */
+        backdrop-filter: blur(8px); /* soft glow */
+      }
 
-            container.appendChild(div);
-          });
-        }
+      .play-btn {
+        border: none;
+        background: none;
+        font-size: 1.5em;
+        cursor: pointer;
+        transition: transform 0.2s ease;
+      }
+
+      .play-btn:active {
+        transform: scale(0.9);
+      }
+
+      .progress-bar {
+        flex-grow: 1;
+        height: 5px;
+        background: #eee;
+        border-radius: 5px;
+        overflow: hidden;
+        position: relative;
+      }
+
+      .progress {
+        width: 0%;
+        height: 100%;
+        background: linear-gradient(90deg, #00b09b, #96c93d);
+        transition: width 0.1s linear;
+      }
+
+      .timestamp {
+        font-size: 0.9em;
+        color: #555;
+        min-width: 40px;
+        text-align: right;
+      }
 
 
-      </script>
+      .memories-title {
+        font-size: 1.2em; /* Small, like phone header */
+        color: #e60073;
+        margin: 15px 0 5px;
+        text-align: center;
+      }
 
-        <!-- Lightbox Number Display -->
-        <span id="lightbox-index" style="position:fixed; top:10px; left:10px; color:white; background:rgba(0,0,0,0.6); padding:6px 10px; border-radius:6px; font-size:1rem; z-index:2000; display:none;">1</span>
+      .subtitle {
+        font-size: 0.8em;
+        color: #777;
+        margin-bottom: 20px;
+        text-align: center;
+      }
 
+      .date-heading {
+        font-size: 0.9em;
+        color: #333;
+        margin: 15px 0 8px 5%;
+        text-align: left;
+      }
 
+      .photo-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr); /* 3 per row like iPhone */
+        gap: 3px;
+        margin: 0 auto 20px;
+        max-width: 420px; /* like iPhone 12 Pro width */
+      }
 
-        <div id="lightbox">
-          <span id="lightbox-close">&times;</span>
-          <span id="lightbox-prev">&#10094;</span>
-          <img id="lightbox-img" src="" alt="enlarged photo">
-          <video id="lightbox-video" controls loop style="display:none; max-width:90%; max-height:90%;">
-            <source src="" type="video/mp4">
-          </video>
-          <span id="lightbox-next">&#10095;</span>
+      .photo-grid img, .photo-grid video {
+        width: 100%;
+        aspect-ratio: 1 / 1; /* force square */
+        object-fit: cover;
+        border-radius: 3px;
+        cursor: pointer;
+        transition: transform 0.2s;
+        display: block;
+      }
+
+      .photo-grid img:hover, .photo-grid video:hover {
+        transform: scale(1.03);
+      }
+
+      .photo-item{
+        position: relative;
+      }
+      .photo-number{
+        position: absolute;
+        top: 5px;
+        left: 5px;
+        background: rgba(0,0,0,0.6);
+        color: #fff;
+        padding: 2px 6px;
+        font-size: 0.7em;
+        border-radius: 4px;
+        z-index: 10;
+      }
+
+      /* Lightbox */
+      #lightbox {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.9);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 1000;
+      }
+
+      #lightbox img {
+        max-width: 90%;
+        max-height: 90%;
+        border-radius: 10px;
+      }
+
+      #lightbox.active {
+        display: flex;
+      }
+
+      #lightbox-close {
+        position: absolute;
+        top: 20px;
+        right: 25px;
+        font-size: 2rem;
+        font-weight: bold;
+        color: white;
+        cursor: pointer;
+        transition: transform 0.2s ease;
+      }
+
+      #lightbox-close:hover {
+        transform: scale(1.2);
+        color: #ff4d4d;
+      }
+
+      #lightbox-prev, #lightbox-next {
+        position: absolute;
+        top: 50%;
+        font-size: 2.5rem;
+        font-weight: bold;
+        color: white;
+        cursor: pointer;
+        user-select: none;
+        transform: translateY(-50%);
+        padding: 10px;
+        transition: color 0.2s ease;
+      }
+
+      #lightbox-prev { left: 20px; }
+      #lightbox-next { right: 20px; }
+
+      #lightbox-prev:hover, #lightbox-next:hover {
+        color: #ff4d4d;
+      }
+
+    </style>
+  </head>
+  <body>
+    <img id="bg-blur" src="image/lissa-blur.jpg">
+    <img id="bg-clear" src="image/lissa.jpg">
+    <div id="mainWrapper">
+      <div class="content" id="mainContent">
+        <h1 style="margin-top:  50px; color: white;">✨Main Page✨</h1>
+        <div class="button-grid">
+          <button onclick = "location.href='page1.html'" style="background:#FFCCE6; color:#000;">Page 1</button>
+          <button onclick = "location.href='page2.html'" style="background:#FFDFBA; color:#000;">Page 2</button>
+          <button onclick = "location.href='July.html'" style="background:#CCE0FF; color:#000;">July</button>
+          <button onclick = "location.href='August.html'" style="background:#FFF5CC; color:#000;">August</button>
+          <button onclick = "location.href='September.html'" style="background:#FFE6A7; color:#000;">September</button>
+          <button onclick = "location.href='October.html'" style="background:#FFD4A3; color:#000;">October</button>
+          <button onclick = "location.href='November.html'" style="background:#E3CCFF; color:#000;">November</button>
         </div>
-
-        <button class="back-button" onclick="goBack()">Back</button>
-        <button class="floating-button floating1" onclick="scrollToBottom()">↓</button>
-        
       </div>
 
-    
+      <div id="mainContentPlaceholder" style="display: none;"></div>
+
+      <label class="heart-checkbox" style="margin-bottom: 50px;">
+          <input type="checkbox" id="loveCheck">
+          <span class="heart"></span>
+      </label>
+
+      <button class="floating-button floating1" onclick="scrollToBottom()">↓</button>
+
+      <div id="pages">
+        <div id="page2" class="page" style="display:none;">
+          <h1 style="font-family: 'Poppins', 'Quicksand', 'Nunito', sans-serif; font-weight: 600; letter-spacing: 0.5px;">哭包👩🏿💕💕</h1>
+
+          <div class="voice-message">
+            <div class="voice-bubble">
+              <button id="playButton" class="play-btn">▶️</button>
+              <div class="progress-bar">
+                <div class="progress"></div>
+              </div>
+              <span class="timestamp" id="audioTime">0:00</span>
+            </div>
+          </div>
+
+          <audio id="voiceAudio" src="image/ilovezhitengsound.m4a"></audio>
+
+          <button class="back-button" onclick="goBack()">Back</button>
+        </div>
+        
+        <script>
+          // Update lightbox items
+          updateItemsList();
+          // Function to populate grid dynamically
+          function populateGrid(containerId, mediaArray) {
+            const container = document.getElementById(containerId);
+            mediaArray.forEach((item, idx) => {
+              const div = document.createElement('div');
+              div.className = 'photo-item';
+
+              const numberSpan = document.createElement('span');
+              numberSpan.className = 'photo-number';
+              numberSpan.textContent = idx + 1;
+
+              div.appendChild(numberSpan);
+
+              if (item.type === 'image') {
+                const img = document.createElement('img');
+                img.src = item.src;
+                img.loading = 'lazy';
+                div.appendChild(img);
+              } else if (item.type === 'video') {
+                const video = document.createElement('video');
+                video.muted = true;
+                video.playsInline = true;
+                video.preload = 'metadata';
+                if (item.poster) video.poster = item.poster;
+                const source = document.createElement('source');
+                source.src = item.src;
+                source.type = 'video/mp4';
+                video.appendChild(source);
+                div.appendChild(video);
+              }
+
+              container.appendChild(div);
+            });
+          }
+
+
+        </script>
+
+          <!-- Lightbox Number Display -->
+          <span id="lightbox-index" style="position:fixed; top:10px; left:10px; color:white; background:rgba(0,0,0,0.6); padding:6px 10px; border-radius:6px; font-size:1rem; z-index:2000; display:none;">1</span>
+
+
+
+          <div id="lightbox">
+            <span id="lightbox-close">&times;</span>
+            <span id="lightbox-prev">&#10094;</span>
+            <img id="lightbox-img" src="" alt="enlarged photo">
+            <video id="lightbox-video" controls loop style="display:none; max-width:90%; max-height:90%;">
+              <source src="" type="video/mp4">
+            </video>
+            <span id="lightbox-next">&#10095;</span>
+          </div>
+
+          <button class="back-button" onclick="goBack()">Back</button>
+          <button class="floating-button floating1" onclick="scrollToBottom()">↓</button>
+          
+        </div>
+
+      
+      </div>
     </div>
-  </div>
 
-  <script>
-    // Your existing JavaScript remains the same
-    const loveCheck = document.getElementById("loveCheck");
-    const mainContent = document.getElementById("mainContent");
-    const bgBlur = document.getElementById("bg-blur");
-    const bgClear = document.getElementById("bg-clear");
+    <script>
+      // Your existing JavaScript remains the same
+      const loveCheck = document.getElementById("loveCheck");
+      const mainContent = document.getElementById("mainContent");
+      const bgBlur = document.getElementById("bg-blur");
+      const bgClear = document.getElementById("bg-clear");
 
-    loveCheck.addEventListener("change", () => {
-      if (loveCheck.checked) {
-        const mainContentHeight = mainContent.clientHeight;
-        const mainWrapper = document.getElementById("mainWrapper");
-        const mainWrapperHeight = mainWrapper.offsetHeight;
-        mainContentPlaceholder.style.height = mainWrapperHeight + "px";
+      loveCheck.addEventListener("change", () => {
+        if (loveCheck.checked) {
+          const mainContentHeight = mainContent.clientHeight;
+          const mainWrapper = document.getElementById("mainWrapper");
+          const mainWrapperHeight = mainWrapper.offsetHeight;
+          mainContentPlaceholder.style.height = mainWrapperHeight + "px";
 
-        mainContent.style.visibility = "hidden";
-        bgBlur.style.display = "none";
-        bgClear.style.display = "block";
-      }else{
-        mainContent.style.visibility = "visible";
-        bgBlur.style.display = "block";
-        bgClear.style.display = "none";
-      }
-    });
+          mainContent.style.visibility = "hidden";
+          bgBlur.style.display = "none";
+          bgClear.style.display = "block";
+        }else{
+          mainContent.style.visibility = "visible";
+          bgBlur.style.display = "block";
+          bgClear.style.display = "none";
+        }
+      });
 
-    // Disable browser's automatic scroll restoration
-    if('scrollRestoration' in history) {
-      history.scrollRestoration = 'manual';
-    }
-
-    // Always scroll to top when page reloads
-    window.onload = function() {
-      window.scrollTo({top:0,left:0,behavior:'smooth'});
-    }
-
-    let lastScroll = 0;
-
-    function openPage(pageId) {
-      lastScroll = window.scrollY;
-
-      document.querySelector('.button-grid').style.display = 'none';
-      mainContent.style.display = 'none';
-      loveCheck.parentElement.style.display = 'none';
-      document.getElementById(pageId).style.display = 'block';
-      bgBlur.style.display = "none";
-      bgClear.style.display = "none";
-
-      window.scrollTo(0, 0);
-    }
-
-    function goBack() {
-      document.querySelectorAll('.page').forEach(p => p.style.display = 'none');
-      document.querySelector('.button-grid').style.display = 'grid';
-      loveCheck.parentElement.style.display = 'inline-block';
-
-      if(!loveCheck.checked){
-        mainContent.style.display = 'block';
-        bgBlur.style.display = "block";
-        bgClear.style.display = "none";
-      }else{
-        document.querySelectorAll('.page').forEach(p => p.style.background = 'none');
-        bgBlur.style.display = "none";
-        bgClear.style.display = "block";
+      // Disable browser's automatic scroll restoration
+      if('scrollRestoration' in history) {
+        history.scrollRestoration = 'manual';
       }
 
-      window.scrollTo(0, lastScroll);
-    }
+      // Always scroll to top when page reloads
+      window.onload = function() {
+        window.scrollTo({top:0,left:0,behavior:'smooth'});
+      }
 
-    function scrollToTop(){
-      window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
+      let lastScroll = 0;
+
+      function openPage(pageId) {
+        lastScroll = window.scrollY;
+
+        document.querySelector('.button-grid').style.display = 'none';
+        mainContent.style.display = 'none';
+        loveCheck.parentElement.style.display = 'none';
+        document.getElementById(pageId).style.display = 'block';
+        bgBlur.style.display = "none";
+        bgClear.style.display = "none";
+
+        window.scrollTo(0, 0);
+      }
+
+      function goBack() {
+        document.querySelectorAll('.page').forEach(p => p.style.display = 'none');
+        document.querySelector('.button-grid').style.display = 'grid';
+        loveCheck.parentElement.style.display = 'inline-block';
+
+        if(!loveCheck.checked){
+          mainContent.style.display = 'block';
+          bgBlur.style.display = "block";
+          bgClear.style.display = "none";
+        }else{
+          document.querySelectorAll('.page').forEach(p => p.style.background = 'none');
+          bgBlur.style.display = "none";
+          bgClear.style.display = "block";
+        }
+
+        window.scrollTo(0, lastScroll);
+      }
+
+      function scrollToTop(){
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
+      }
+
+      function scrollToBottom(){
+        window.scrollTo({
+          top:document.body.scrollHeight, 
+          behavior: 'smooth'
+        });
+      }
+
+      function scrollToBottom2() {
+        const target = document.body.scrollHeight;
+        const start = window.scrollY;
+        const distance = target - start;
+        const duration = 3000; // adjust (ms) -> slower or faster
+        let startTime = null;
+
+        function animation(currentTime) {
+          if (!startTime) startTime = currentTime;
+          const timeElapsed = currentTime - startTime;
+          const progress = Math.min(timeElapsed / duration, 1);
+
+          // EaseInOutQuad for smoothness
+          const easing = progress < 0.5 
+            ? 2 * progress * progress 
+            : -1 + (4 - 2 * progress) * progress;
+
+          window.scrollTo(0, start + distance * easing);
+
+          if (timeElapsed < duration) {
+            requestAnimationFrame(animation);
+          }
+        }
+
+        requestAnimationFrame(animation);
+      }
+
+      // --- Page 2 Audio Player ---
+      const playButton = document.getElementById('playButton');
+      const audio = document.getElementById('voiceAudio');
+      const progress = document.querySelector('.progress');
+      const audioTime = document.getElementById('audioTime');
+
+      let isPlaying = false;
+
+      playButton.addEventListener('click', () => {
+        if (!audio) return;
+        if (isPlaying) {
+          audio.pause();
+          playButton.textContent = '▶️';
+        } else {
+          audio.play();
+          playButton.textContent = '⏸️';
+        }
+        isPlaying = !isPlaying;
       });
-    }
 
-    function scrollToBottom(){
-      window.scrollTo({
-        top:document.body.scrollHeight, 
-        behavior: 'smooth'
+      audio.addEventListener('timeupdate', () => {
+        const progressPercent = (audio.currentTime / audio.duration) * 100;
+        progress.style.width = `${progressPercent}%`;
+
+        // Format time (mm:ss)
+        const minutes = Math.floor(audio.currentTime / 60);
+        const seconds = Math.floor(audio.currentTime % 60);
+        audioTime.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
       });
-    }
 
-    function scrollToBottom2() {
-      const target = document.body.scrollHeight;
-      const start = window.scrollY;
-      const distance = target - start;
-      const duration = 3000; // adjust (ms) -> slower or faster
-      let startTime = null;
+      audio.addEventListener('ended', () => {
+        isPlaying = false;
+        playButton.textContent = '▶️';
+        progress.style.width = '0%';
+        audioTime.textContent = '0:00';
+      });
 
-      function animation(currentTime) {
-        if (!startTime) startTime = currentTime;
-        const timeElapsed = currentTime - startTime;
-        const progress = Math.min(timeElapsed / duration, 1);
 
-        // EaseInOutQuad for smoothness
-        const easing = progress < 0.5 
-          ? 2 * progress * progress 
-          : -1 + (4 - 2 * progress) * progress;
 
-        window.scrollTo(0, start + distance * easing);
+      const items = document.querySelectorAll(".photo-grid img, .photo-grid video");
+      const lightbox = document.getElementById("lightbox");
+      const lightboxImg = document.getElementById("lightbox-img");
+      const lightboxVideo = document.getElementById("lightbox-video");
+      const lightboxClose = document.getElementById("lightbox-close");
+      const lightboxPrev = document.getElementById("lightbox-prev");
+      const lightboxNext = document.getElementById("lightbox-next");
 
-        if (timeElapsed < duration) {
-          requestAnimationFrame(animation);
+      let currentIndex = 0;
+
+      // Open lightbox
+      items.forEach((item, index) => {
+        item.addEventListener("click", () => {
+          currentIndex = index;
+          showItem(currentIndex);
+          lightbox.classList.add("active");
+        });
+      });
+
+      function showItem(index) {
+        if (index < 0) index = items.length - 1;
+        if (index >= items.length) index = 0;
+        currentIndex = index;
+
+        // Reset both
+        lightboxImg.style.display = "none";
+        lightboxVideo.style.display = "none";
+        lightboxVideo.pause();
+
+        updateLightboxNumber();
+        if (items[currentIndex].tagName === "IMG") {
+          // Show image
+          lightboxImg.src = items[currentIndex].src;
+          lightboxImg.style.display = "block";
+        } else {
+          // Show video
+          const src = items[currentIndex].querySelector("source").src;
+          lightboxVideo.querySelector("source").src = src;
+          lightboxVideo.load();
+          lightboxVideo.muted = false; // unmuted in lightbox
+          lightboxVideo.style.display = "block";
+          lightboxVideo.play();
         }
       }
 
-      requestAnimationFrame(animation);
-    }
+      // --- UPDATE TOP-LEFT NUMBER IN LIGHTBOX ---
+      function updateLightboxNumber() {
+        const currentItem = items[currentIndex];
 
-    // --- Page 2 Audio Player ---
-    const playButton = document.getElementById('playButton');
-    const audio = document.getElementById('voiceAudio');
-    const progress = document.querySelector('.progress');
-    const audioTime = document.getElementById('audioTime');
+        // Find the .photo-item container
+        const parentItem = currentItem.closest(".photo-item");
 
-    let isPlaying = false;
+        if (!parentItem) return;
 
-    playButton.addEventListener('click', () => {
-      if (!audio) return;
-      if (isPlaying) {
-        audio.pause();
-        playButton.textContent = '▶️';
-      } else {
-        audio.play();
-        playButton.textContent = '⏸️';
+        // Read the <span class="photo-number"> inside the item
+        const numberSpan = parentItem.querySelector(".photo-number");
+
+        if (numberSpan) {
+          const number = numberSpan.textContent.trim();
+          document.getElementById("lightbox-index").textContent = number;
+          document.getElementById("lightbox-index").style.display = "block";
+        }
       }
-      isPlaying = !isPlaying;
-    });
-
-    audio.addEventListener('timeupdate', () => {
-      const progressPercent = (audio.currentTime / audio.duration) * 100;
-      progress.style.width = `${progressPercent}%`;
-
-      // Format time (mm:ss)
-      const minutes = Math.floor(audio.currentTime / 60);
-      const seconds = Math.floor(audio.currentTime % 60);
-      audioTime.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
-    });
-
-    audio.addEventListener('ended', () => {
-      isPlaying = false;
-      playButton.textContent = '▶️';
-      progress.style.width = '0%';
-      audioTime.textContent = '0:00';
-    });
 
 
-
-    const items = document.querySelectorAll(".photo-grid img, .photo-grid video");
-    const lightbox = document.getElementById("lightbox");
-    const lightboxImg = document.getElementById("lightbox-img");
-    const lightboxVideo = document.getElementById("lightbox-video");
-    const lightboxClose = document.getElementById("lightbox-close");
-    const lightboxPrev = document.getElementById("lightbox-prev");
-    const lightboxNext = document.getElementById("lightbox-next");
-
-    let currentIndex = 0;
-
-    // Open lightbox
-    items.forEach((item, index) => {
-      item.addEventListener("click", () => {
-        currentIndex = index;
-        showItem(currentIndex);
-        lightbox.classList.add("active");
-      });
-    });
-
-    function showItem(index) {
-      if (index < 0) index = items.length - 1;
-      if (index >= items.length) index = 0;
-      currentIndex = index;
-
-      // Reset both
-      lightboxImg.style.display = "none";
-      lightboxVideo.style.display = "none";
-      lightboxVideo.pause();
-
-      updateLightboxNumber();
-      if (items[currentIndex].tagName === "IMG") {
-        // Show image
-        lightboxImg.src = items[currentIndex].src;
-        lightboxImg.style.display = "block";
-      } else {
-        // Show video
-        const src = items[currentIndex].querySelector("source").src;
-        lightboxVideo.querySelector("source").src = src;
-        lightboxVideo.load();
-        lightboxVideo.muted = false; // unmuted in lightbox
-        lightboxVideo.style.display = "block";
-        lightboxVideo.play();
-      }
-    }
-
-    // --- UPDATE TOP-LEFT NUMBER IN LIGHTBOX ---
-    function updateLightboxNumber() {
-      const currentItem = items[currentIndex];
-
-      // Find the .photo-item container
-      const parentItem = currentItem.closest(".photo-item");
-
-      if (!parentItem) return;
-
-      // Read the <span class="photo-number"> inside the item
-      const numberSpan = parentItem.querySelector(".photo-number");
-
-      if (numberSpan) {
-        const number = numberSpan.textContent.trim();
-        document.getElementById("lightbox-index").textContent = number;
-        document.getElementById("lightbox-index").style.display = "block";
-      }
-    }
-
-
-    // Close
-    lightboxClose.addEventListener("click", (e) => {
-      e.stopPropagation();
-      lightbox.classList.remove("active");
-      lightboxVideo.pause();
-      document.getElementById("lightbox-index").style.display="none";
-    });
-
-    // Background click closes
-    lightbox.addEventListener("click", (e) => {
-      if (e.target === lightbox) {
+      // Close
+      lightboxClose.addEventListener("click", (e) => {
+        e.stopPropagation();
         lightbox.classList.remove("active");
         lightboxVideo.pause();
-        document.getElementById("lightbox-index").style.display = "none";
-      }
-    });
+        document.getElementById("lightbox-index").style.display="none";
+      });
 
-    // Prev / Next arrows
-    lightboxPrev.addEventListener("click", () => showItem(currentIndex - 1));
-    lightboxNext.addEventListener("click", () => showItem(currentIndex + 1));
+      // Background click closes
+      lightbox.addEventListener("click", (e) => {
+        if (e.target === lightbox) {
+          lightbox.classList.remove("active");
+          lightboxVideo.pause();
+          document.getElementById("lightbox-index").style.display = "none";
+        }
+      });
 
-    // Keyboard navigation
-    document.addEventListener("keydown", (e) => {
-      if (!lightbox.classList.contains("active")) return;
-      if (e.key === "ArrowLeft") showItem(currentIndex - 1);
-      if (e.key === "ArrowRight") showItem(currentIndex + 1);
-      if (e.key === "Escape") lightbox.classList.remove("active");
-    });
+      // Prev / Next arrows
+      lightboxPrev.addEventListener("click", () => showItem(currentIndex - 1));
+      lightboxNext.addEventListener("click", () => showItem(currentIndex + 1));
 
-    // Swipe support for mobile
-    let touchStartX = 0;
+      // Keyboard navigation
+      document.addEventListener("keydown", (e) => {
+        if (!lightbox.classList.contains("active")) return;
+        if (e.key === "ArrowLeft") showItem(currentIndex - 1);
+        if (e.key === "ArrowRight") showItem(currentIndex + 1);
+        if (e.key === "Escape") lightbox.classList.remove("active");
+      });
 
-    lightbox.addEventListener("touchstart", (e) => {
-      touchStartX = e.changedTouches[0].screenX;
-    });
+      // Swipe support for mobile
+      let touchStartX = 0;
 
-    lightbox.addEventListener("touchend", (e) => {
-      let touchEndX = e.changedTouches[0].screenX;
-      if (touchEndX < touchStartX - 50) {
-        // swipe left → next
-        showItem(currentIndex + 1);
-      }
-      if (touchEndX > touchStartX + 50) {
-        // swipe right → prev
-        showItem(currentIndex - 1);
-      }
-    });
+      lightbox.addEventListener("touchstart", (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+      });
 
-  </script>
-</body>
-</html>
+      lightbox.addEventListener("touchend", (e) => {
+        let touchEndX = e.changedTouches[0].screenX;
+        if (touchEndX < touchStartX - 50) {
+          // swipe left → next
+          showItem(currentIndex + 1);
+        }
+        if (touchEndX > touchStartX + 50) {
+          // swipe right → prev
+          showItem(currentIndex - 1);
+        }
+      });
+
+    </script>
+  </body>
+  </html>
