@@ -390,93 +390,46 @@
           <span class="heart"></span>
       </label>
 
-      <button class="floating-button floating1" onclick="scrollToBottom()">↓</button>
-
-      <div id="pages">
-        <div id="page2" class="page" style="display:none;">
-          <h1 style="font-family: 'Poppins', 'Quicksand', 'Nunito', sans-serif; font-weight: 600; letter-spacing: 0.5px;">哭包👩🏿💕💕</h1>
-
-          <div class="voice-message">
-            <div class="voice-bubble">
-              <button id="playButton" class="play-btn">▶️</button>
-              <div class="progress-bar">
-                <div class="progress"></div>
-              </div>
-              <span class="timestamp" id="audioTime">0:00</span>
-            </div>
-          </div>
-
-          <audio id="voiceAudio" src="image/ilovezhitengsound.m4a"></audio>
-
-          <button class="back-button" onclick="goBack()">Back</button>
-        </div>
-        
-        <script>
-          // Update lightbox items
-          updateItemsList();
-          // Function to populate grid dynamically
-          function populateGrid(containerId, mediaArray) {
-            const container = document.getElementById(containerId);
-            mediaArray.forEach((item, idx) => {
-              const div = document.createElement('div');
-              div.className = 'photo-item';
-
-              const numberSpan = document.createElement('span');
-              numberSpan.className = 'photo-number';
-              numberSpan.textContent = idx + 1;
-
-              div.appendChild(numberSpan);
-
-              if (item.type === 'image') {
-                const img = document.createElement('img');
-                img.src = item.src;
-                img.loading = 'lazy';
-                div.appendChild(img);
-              } else if (item.type === 'video') {
-                const video = document.createElement('video');
-                video.muted = true;
-                video.playsInline = true;
-                video.preload = 'metadata';
-                if (item.poster) video.poster = item.poster;
-                const source = document.createElement('source');
-                source.src = item.src;
-                source.type = 'video/mp4';
-                video.appendChild(source);
-                div.appendChild(video);
-              }
-
-              container.appendChild(div);
-            });
-          }
-
-
-        </script>
-
-          <!-- Lightbox Number Display -->
-          <span id="lightbox-index" style="position:fixed; top:10px; left:10px; color:white; background:rgba(0,0,0,0.6); padding:6px 10px; border-radius:6px; font-size:1rem; z-index:2000; display:none;">1</span>
-
-
-
-          <div id="lightbox">
-            <span id="lightbox-close">&times;</span>
-            <span id="lightbox-prev">&#10094;</span>
-            <img id="lightbox-img" src="" alt="enlarged photo">
-            <video id="lightbox-video" controls loop style="display:none; max-width:90%; max-height:90%;">
-              <source src="" type="video/mp4">
-            </video>
-            <span id="lightbox-next">&#10095;</span>
-          </div>
-
-          <button class="back-button" onclick="goBack()">Back</button>
-          <button class="floating-button floating1" onclick="scrollToBottom()">↓</button>
-          
-        </div>
-
-      
-      </div>
     </div>
 
     <script>
+      // Update lightbox items
+      updateItemsList();
+      // Function to populate grid dynamically
+      function populateGrid(containerId, mediaArray) {
+        const container = document.getElementById(containerId);
+        mediaArray.forEach((item, idx) => {
+          const div = document.createElement('div');
+          div.className = 'photo-item';
+
+          const numberSpan = document.createElement('span');
+          numberSpan.className = 'photo-number';
+          numberSpan.textContent = idx + 1;
+
+          div.appendChild(numberSpan);
+
+          if (item.type === 'image') {
+            const img = document.createElement('img');
+            img.src = item.src;
+            img.loading = 'lazy';
+            div.appendChild(img);
+          } else if (item.type === 'video') {
+            const video = document.createElement('video');
+            video.muted = true;
+            video.playsInline = true;
+            video.preload = 'metadata';
+            if (item.poster) video.poster = item.poster;
+            const source = document.createElement('source');
+            source.src = item.src;
+            source.type = 'video/mp4';
+            video.appendChild(source);
+            div.appendChild(video);
+          }
+
+          container.appendChild(div);
+        });
+      }
+
       // Your existing JavaScript remains the same
       const loveCheck = document.getElementById("loveCheck");
       const mainContent = document.getElementById("mainContent");
